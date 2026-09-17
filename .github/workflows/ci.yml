@@ -22,7 +22,7 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust stable
         run: rustup toolchain install stable --profile minimal --component clippy,rustfmt
@@ -31,9 +31,11 @@ jobs:
         with:
           shared-key: "pyratatui-check"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: "pyproject.toml"
 
       - name: Rust fmt
         run: cargo fmt --all -- --check
@@ -97,7 +99,7 @@ jobs:
       attestations: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust stable
         run: rustup toolchain install stable --profile minimal --target ${{ matrix.target }}
@@ -107,7 +109,7 @@ jobs:
           shared-key: "pyratatui-${{ matrix.target }}"
           cache-on-failure: true
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.x"
 
@@ -140,7 +142,7 @@ jobs:
           target: ${{ matrix.target }}
           args: --release --strip --out dist
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: wheels-${{ matrix.target }}
           path: dist/*.whl
@@ -159,11 +161,11 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           pattern: wheels-*
           merge-multiple: true
