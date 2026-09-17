@@ -8,7 +8,9 @@
 //! - All types remain in `ratatui::widgets`.
 
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
 use ratatui::layout::Constraint as RConstraint;
+use ratatui::layout::Rect as RRect;
 use ratatui::widgets::{
     Cell as RCell, HighlightSpacing, Row as RRow, Table as RTable, TableState as RTableState,
 };
@@ -167,6 +169,9 @@ impl TableState {
 
 /// A scrollable table widget with row and column selection.
 ///
+/// `column_widths`, `header`, and `footer` can be passed to the constructor
+/// or set later with the builder methods of the same name.
+///
 /// ```python
 /// from pyratatui import Table, Row, Cell, Constraint, TableState, Block
 ///
@@ -174,10 +179,11 @@ impl TableState {
 ///     Row([Cell("Name"), Cell("Value")]),
 ///     Row([Cell("Alice"), Cell("42")]),
 /// ]
-/// table = (Table(rows)
-///     .column_widths([Constraint.length(20), Constraint.fill(1)])
-///     .block(Block().bordered().title("Data"))
-///     .highlight_symbol("▶ "))
+/// table = Table(
+///     rows,
+///     column_widths=[Constraint.length(20), Constraint.fill(1)],
+///     header=Row([Cell("Key"), Cell("Val")]),
+/// ).block(Block().bordered().title("Data"))
 ///
 /// state = TableState()
 /// state.select(0)
@@ -195,8 +201,6 @@ pub struct Table {
     highlight_style: Option<Style>,
     highlight_symbol: Option<String>,
     column_spacing: u16,
-    #[allow(dead_code)]
-    flex_widths: bool,
 }
 
 impl Table {
@@ -229,22 +233,35 @@ impl Table {
     }
 }
 
+impl Table {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
+    }
+}
+
 #[pymethods]
 impl Table {
     #[new]
-    pub fn new(rows: Vec<PyRef<Row>>) -> Self {
+    #[pyo3(signature = (rows, column_widths=None, header=None, footer=None))]
+    pub fn new(
+        rows: Vec<PyRef<Row>>,
+        column_widths: Option<Vec<PyRef<Constraint>>>,
+        header: Option<PyRef<Row>>,
+        footer: Option<PyRef<Row>>,
+    ) -> Self {
         Self {
             rows: rows.iter().map(|r| (**r).clone()).collect(),
-            header: None,
-            footer: None,
+            header: header.as_ref().map(|r| (**r).clone()),
+            footer: footer.as_ref().map(|r| (**r).clone()),
             block: None,
-            column_widths: vec![],
+            column_widths: column_widths
+                .map(|w| w.iter().map(|c| (**c).clone()).collect())
+                .unwrap_or_default(),
             style: None,
             highlight_style: None,
             highlight_symbol: None,
             column_spacing: 1,
-            #[allow(dead_code)]
-            flex_widths: false,
         }
     }
 

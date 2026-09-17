@@ -1,8 +1,7 @@
-// src/prompts/mod.rs
 //! Python bindings for interactive prompt widgets.
 //!
-//! Provides `TextPrompt` and `PasswordPrompt` widgets built on top of ratatui
-//! 0.29 with readline-style key bindings and a clean stateful API.
+//! Provides `TextPrompt` and `PasswordPrompt` widgets with readline-style
+//! key bindings and a clean stateful API.
 //!
 //! # Quick-start
 //! ```python
@@ -43,23 +42,24 @@
 
 use pyo3::prelude::*;
 use ratatui::{
+    Frame as RFrame,
     layout::Rect as RRect,
     style::{Color as RColor, Modifier as RModifier, Style as RStyle},
     text::{Line as RLine, Span as RSpan, Text as RText},
     widgets::Paragraph as RParagraph,
-    Frame as RFrame,
 };
 
-use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
+use crate::terminal::key_code_str;
+use crossterm::event::{self, Event, KeyEvent, KeyEventKind, KeyModifiers};
 use crossterm::execute;
 use crossterm::terminal::{
-    disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
+    EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode,
 };
 use pyo3::exceptions::PyRuntimeError;
+use ratatui::Terminal as RTerminal;
 use ratatui::backend::CrosstermBackend;
 use ratatui::layout::{Constraint, Direction, Layout};
 use ratatui::widgets::{Block, Borders};
-use ratatui::Terminal as RTerminal;
 use std::io;
 
 // ── PromptStatus ─────────────────────────────────────────────────────────────
@@ -270,6 +270,10 @@ impl TextState {
     /// Internal key dispatch — separated from Python glue so the blocking
     /// helper can call it without a `Bound<PyAny>`.
     pub(crate) fn apply_key(&mut self, code: &str, ctrl: bool, alt: bool) -> bool {
+        if self.status != PromptStatus::Pending {
+            return false;
+        }
+
         // ── named keys ───────────────────────────────────────────────────────
         match code {
             "Enter" => {
@@ -379,17 +383,15 @@ impl TextState {
         }
 
         // ── Printable single characters ───────────────────────────────────────
-        if !alt && code.chars().count() == 1 {
-            if let Some(ch) = code.chars().next() {
-                if !ch.is_control() {
-                    self.chars.insert(self.cursor, ch);
-                    self.cursor += 1;
-                    return true;
-                }
+        let mut chars = code.chars();
+        match (alt, chars.next(), chars.next()) {
+            (false, Some(ch), None) if !ch.is_control() => {
+                self.chars.insert(self.cursor, ch);
+                self.cursor += 1;
+                true
             }
+            _ => false,
         }
-
-        false
     }
 }
 
@@ -555,31 +557,6 @@ impl PasswordPrompt {
 
 // ── Blocking helpers ──────────────────────────────────────────────────────────
 
-/// Map a crossterm [`KeyCode`] to the string representation used throughout
-/// pyratatui (mirrors `key_code_str` in `terminal`).
-fn kc_str(kc: &KeyCode) -> String {
-    match kc {
-        KeyCode::Char(c) => c.to_string(),
-        KeyCode::Enter => "Enter".into(),
-        KeyCode::Esc => "Esc".into(),
-        KeyCode::Backspace => "Backspace".into(),
-        KeyCode::Delete => "Delete".into(),
-        KeyCode::Tab => "Tab".into(),
-        KeyCode::BackTab => "BackTab".into(),
-        KeyCode::Up => "Up".into(),
-        KeyCode::Down => "Down".into(),
-        KeyCode::Left => "Left".into(),
-        KeyCode::Right => "Right".into(),
-        KeyCode::Home => "Home".into(),
-        KeyCode::End => "End".into(),
-        KeyCode::PageUp => "PageUp".into(),
-        KeyCode::PageDown => "PageDown".into(),
-        KeyCode::Insert => "Insert".into(),
-        KeyCode::F(n) => format!("F{n}"),
-        _ => "Unknown".into(),
-    }
-}
-
 /// Run the blocking prompt event loop.
 fn run_blocking(label: &str, style: TextRenderStyle) -> PyResult<Option<String>> {
     enable_raw_mode().map_err(|e| PyRuntimeError::new_err(e.to_string()))?;
@@ -620,19 +597,17 @@ fn run_blocking(label: &str, style: TextRenderStyle) -> PyResult<Option<String>>
 
             if event::poll(std::time::Duration::from_millis(50))
                 .map_err(|e| PyRuntimeError::new_err(e.to_string()))?
-            {
-                if let Ok(Event::Key(KeyEvent {
+                && let Ok(Event::Key(KeyEvent {
                     code,
                     modifiers,
                     kind: KeyEventKind::Press,
                     ..
                 })) = event::read()
-                {
-                    let code_str = kc_str(&code);
-                    let ctrl = modifiers.contains(KeyModifiers::CONTROL);
-                    let alt = modifiers.contains(KeyModifiers::ALT);
-                    state.apply_key(&code_str, ctrl, alt);
-                }
+            {
+                let code_str = key_code_str(&code);
+                let ctrl = modifiers.contains(KeyModifiers::CONTROL);
+                let alt = modifiers.contains(KeyModifiers::ALT);
+                state.apply_key(&code_str, ctrl, alt);
             }
 
             if state.is_complete() {
@@ -693,4 +668,104 @@ pub fn register_prompts(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()
     m.add_function(wrap_pyfunction!(prompt_text, m)?)?;
     m.add_function(wrap_pyfunction!(prompt_password, m)?)?;
     Ok(())
+}
+
+// ── Unit tests ────────────────────────────────────────────────────────────────
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn focused(text: &str) -> TextState {
+        let mut state = TextState::new(text);
+        state.focus();
+        state
+    }
+
+    #[test]
+    fn typing_inserts_at_cursor() {
+        let mut s = focused("");
+        assert!(s.apply_key("h", false, false));
+        assert!(s.apply_key("i", false, false));
+        assert_eq!(s.value(), "hi");
+        assert_eq!(s.cursor_pos(), 2);
+    }
+
+    #[test]
+    fn enter_completes_esc_aborts() {
+        let mut s = focused("draft");
+        assert!(s.is_pending());
+        assert!(s.apply_key("Enter", false, false));
+        assert!(s.is_complete());
+        assert_eq!(s.value(), "draft");
+
+        let mut s = focused("draft");
+        assert!(s.apply_key("Esc", false, false));
+        assert!(s.is_aborted());
+
+        let mut s = focused("draft");
+        assert!(s.apply_key("c", true, false));
+        assert!(s.is_aborted());
+    }
+
+    #[test]
+    fn editing_keys_move_and_delete() {
+        let mut s = focused("abc");
+        assert!(s.apply_key("Left", false, false));
+        assert!(s.apply_key("Backspace", false, false));
+        assert_eq!(s.value(), "ac");
+        assert!(s.apply_key("Delete", false, false));
+        assert_eq!(s.value(), "a");
+        assert!(s.apply_key("Home", false, false));
+        assert!(s.apply_key("End", false, false));
+        assert_eq!(s.cursor_pos(), 1);
+    }
+
+    #[test]
+    fn readline_ctrl_combos() {
+        let mut s = focused("hello");
+        assert!(s.apply_key("a", true, false));
+        assert_eq!(s.cursor_pos(), 0);
+        assert!(s.apply_key("e", true, false));
+        assert_eq!(s.cursor_pos(), 5);
+        assert!(s.apply_key("k", true, false));
+        assert_eq!(s.value(), "hello");
+
+        let mut s = focused("hello world");
+        s.apply_key("a", true, false);
+        s.apply_key("f", true, false);
+        s.apply_key("f", true, false);
+        assert!(s.apply_key("k", true, false));
+        assert_eq!(s.value(), "he");
+
+        let mut s = focused("hello");
+        assert!(s.apply_key("u", true, false));
+        assert_eq!(s.value(), "");
+
+        let mut s = focused("hello world  ");
+        assert!(s.apply_key("w", true, false));
+        assert_eq!(s.value(), "hello ");
+        // At a word boundary the next rubout takes the space and the word,
+        // matching readline's unix-word-rubout.
+        assert!(s.apply_key("w", true, false));
+        assert_eq!(s.value(), "");
+    }
+
+    #[test]
+    fn rejected_keys_leave_state_untouched() {
+        let mut s = focused("ab");
+        assert!(!s.apply_key("x", false, true)); // alt+printable
+        assert!(!s.apply_key("q", true, false)); // unbound ctrl combo
+        assert!(!s.apply_key("\u{7}", false, false)); // control character
+        assert_eq!(s.value(), "ab");
+        assert_eq!(s.cursor_pos(), 2);
+    }
+
+    #[test]
+    fn settled_prompts_ignore_keys() {
+        let mut s = focused("done");
+        s.apply_key("Enter", false, false);
+        assert!(!s.apply_key("x", false, false));
+        assert_eq!(s.value(), "done");
+    }
 }

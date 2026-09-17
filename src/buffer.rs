@@ -1,4 +1,3 @@
-// src/buffer/mod.rs
 //! Python bindings for ratatui's `Buffer` type.
 //!
 //! The `Buffer` is ratatui's intermediate rendering surface.

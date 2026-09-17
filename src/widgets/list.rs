@@ -7,6 +7,8 @@
 //!   at the Rust call site, but we use `.to_string()` to keep 'static lifetime.
 
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
+use ratatui::layout::Rect as RRect;
 use ratatui::text::Line as RLine;
 use ratatui::widgets::{
     List as RList, ListDirection as RListDirection, ListItem as RListItem, ListState as RListState,
@@ -195,6 +197,13 @@ impl List {
             lst = lst.repeat_highlight_symbol(true);
         }
         lst
+    }
+}
+
+impl List {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 

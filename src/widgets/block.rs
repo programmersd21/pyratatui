@@ -8,7 +8,9 @@
 //! - New `BorderType` variants: `LightDoubleDashed`, `HeavyDoubleDashed`, etc. Added below.
 
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
 use ratatui::layout::HorizontalAlignment;
+use ratatui::layout::Rect as RRect;
 use ratatui::text::{Line as RLine, Span as RSpan};
 use ratatui::widgets::{Block as RBlock, BorderType as RBorderType, Borders, Padding as RPadding};
 
@@ -157,6 +159,13 @@ impl Block {
             block = block.border_style(s.inner);
         }
         block
+    }
+}
+
+impl Block {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 

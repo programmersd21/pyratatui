@@ -6,6 +6,8 @@
 use crate::style::Style;
 use crate::widgets::block::Block;
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
+use ratatui::layout::Rect as RRect;
 use ratatui::widgets::{Sparkline as RSparkline, SparklineBar};
 
 /// A compact single-row sparkline chart.
@@ -41,6 +43,13 @@ impl Sparkline {
             s = s.style(st.inner);
         }
         s
+    }
+}
+
+impl Sparkline {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 

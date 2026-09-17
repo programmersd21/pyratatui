@@ -2,6 +2,8 @@
 use crate::style::Style;
 use crate::widgets::block::Block;
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
+use ratatui::layout::Rect as RRect;
 use ratatui::widgets::Tabs as RTabs;
 
 /// A tab bar widget.
@@ -48,6 +50,13 @@ impl Tabs {
             tabs = tabs.highlight_style(s.inner);
         }
         tabs
+    }
+}
+
+impl Tabs {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 

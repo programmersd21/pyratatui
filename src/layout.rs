@@ -1,22 +1,8 @@
-// src/layout/mod.rs
 //! Python bindings for ratatui's layout primitives.
-//!
-//! ratatui 0.30 notes:
-//! - `Alignment` was renamed to `HorizontalAlignment`. A type-alias
-//!   `Alignment = HorizontalAlignment` is provided for backwards compatibility,
-//!   so importing via `ratatui::layout::Alignment` still works.
-//! - `Layout::spacing()` still works (added in 0.26).
-//! - `Flex` variants are unchanged.
 
 use pyo3::prelude::*;
 use ratatui::layout::{
-    // `Alignment` is a re-export alias for `HorizontalAlignment` in ratatui 0.30.
-    Alignment as RAlignment,
-    Constraint as RConstraint,
-    Direction as RDirection,
-    Flex,
-    Layout as RLayout,
-    Margin as RMargin,
+    Constraint as RConstraint, Direction as RDirection, Flex, Layout as RLayout, Margin as RMargin,
     Rect as RRect,
 };
 
@@ -32,7 +18,7 @@ use crate::errors::layout_err_to_py;
 /// r = Rect(0, 0, 80, 24)
 /// inner = r.inner(1, 1)  # shrink by margin
 /// ```
-#[pyclass(module = "pyratatui", from_py_object)]
+#[pyclass(module = "pyratatui", skip_from_py_object)]
 #[derive(Clone, Debug, Copy)]
 pub struct Rect {
     pub(crate) inner: RRect,
@@ -219,27 +205,12 @@ impl Direction {
 // ─── Alignment ────────────────────────────────────────────────────────────────
 
 /// Horizontal alignment for text and widgets.
-///
-/// In ratatui 0.30, `Alignment` is a type alias for `HorizontalAlignment`.
-/// Both names are valid; we expose the Python enum as `Alignment` for
-/// backwards compatibility.
 #[pyclass(module = "pyratatui", eq, eq_int, from_py_object)]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Alignment {
     Left,
     Center,
     Right,
-}
-
-impl Alignment {
-    #[allow(dead_code)]
-    pub(crate) fn to_ratatui(&self) -> RAlignment {
-        match self {
-            Alignment::Left => RAlignment::Left,
-            Alignment::Center => RAlignment::Center,
-            Alignment::Right => RAlignment::Right,
-        }
-    }
 }
 
 // ─── Layout ───────────────────────────────────────────────────────────────────

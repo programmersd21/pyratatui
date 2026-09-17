@@ -5,7 +5,9 @@
 //! Both work via `use ratatui::layout::Alignment as RAlignment`.
 
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
 use ratatui::layout::Alignment as RAlignment;
+use ratatui::layout::Rect as RRect;
 use ratatui::widgets::{Paragraph as RParagraph, Wrap};
 
 use crate::style::Style;
@@ -54,6 +56,13 @@ impl Paragraph {
             _ => RAlignment::Left,
         });
         para
+    }
+}
+
+impl Paragraph {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 

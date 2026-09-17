@@ -1,4 +1,3 @@
-// src/errors/mod.rs
 //! Custom Python exception hierarchy for pyratatui.
 //!
 //! All exceptions derive from `PyratatuiError` so callers can catch them

@@ -1,4 +1,3 @@
-// src/widgets/calendar.rs
 //! Python bindings for ratatui's built-in Calendar widget.
 //!
 //! Exposes:
@@ -6,16 +5,18 @@
 //! - `CalendarEventStore` — HashMap-based `DateStyler` for marking events
 //! - `Monthly`            — the monthly calendar widget
 //!
-//! Requires the `widget-calendar` feature on ratatui (included via `all-widgets`).
+//! Requires the `widget-calendar` feature on ratatui.
 //! Also requires the `time` crate as a direct dependency.
 
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
+use ratatui::layout::Rect as RRect;
 use ratatui::widgets::calendar::{CalendarEventStore as REventStore, Monthly as RMonthly};
 use time::{Date as TDate, Month as TMonth, OffsetDateTime};
 
 use crate::style::Style;
-use crate::widgets::block::Block;
+use crate::widgets::Block;
 
 // ─── CalendarDate ─────────────────────────────────────────────────────────────
 
@@ -231,6 +232,13 @@ impl Monthly {
     }
 }
 
+impl Monthly {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
+    }
+}
+
 #[pymethods]
 impl Monthly {
     /// Create a monthly calendar for the month containing `display_date`.
@@ -303,4 +311,32 @@ pub fn register_calendar(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<(
     m.add_class::<CalendarEventStore>()?;
     m.add_class::<Monthly>()?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn valid_dates_roundtrip() {
+        let d = CalendarDate::from_ymd(2024, 3, 15).unwrap();
+        assert_eq!((d.year(), d.month(), d.day()), (2024, 3, 15));
+    }
+
+    #[test]
+    fn invalid_dates_err() {
+        assert!(CalendarDate::from_ymd(2024, 2, 30).is_err());
+        assert!(CalendarDate::from_ymd(2024, 13, 1).is_err());
+        assert!(CalendarDate::from_ymd(2024, 0, 10).is_err());
+    }
+
+    #[test]
+    fn today_matches_time_crate() {
+        let today = OffsetDateTime::now_utc().date();
+        let d = CalendarDate::today();
+        assert_eq!(
+            (d.year(), d.month(), d.day()),
+            (today.year(), today.month() as u8, today.day())
+        );
+    }
 }

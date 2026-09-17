@@ -1,4 +1,3 @@
-// src/style/mod.rs
 //! Python bindings for ratatui's style primitives.
 //!
 //! Exposes:

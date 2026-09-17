@@ -1,8 +1,9 @@
 // src/widgets/mascot.rs
 //! Python bindings for Ratatui's mascot widget.
 
-use crate::style::Color;
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
+use ratatui::layout::Rect as RRect;
 use ratatui::widgets::{MascotEyeColor as RMascotEyeColor, RatatuiMascot as RRatatuiMascot};
 
 /// State for the mascot's eye.
@@ -46,14 +47,18 @@ impl MascotEyeColor {
 #[derive(Clone, Debug)]
 pub struct RatatuiMascot {
     eye: MascotEyeColor,
-    // Future-proofing: upstream could add more options; keep fields local.
-    #[allow(dead_code)]
-    _reserved_color: Option<Color>,
 }
 
 impl RatatuiMascot {
     pub(crate) fn to_ratatui(&self) -> RRatatuiMascot {
         RRatatuiMascot::new().set_eye(self.eye.to_ratatui())
+    }
+}
+
+impl RatatuiMascot {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 
@@ -64,7 +69,6 @@ impl RatatuiMascot {
     pub fn new(eye_color: Option<&MascotEyeColor>) -> Self {
         Self {
             eye: eye_color.cloned().unwrap_or(MascotEyeColor::Default),
-            _reserved_color: None,
         }
     }
 

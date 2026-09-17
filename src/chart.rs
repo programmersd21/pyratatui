@@ -1,6 +1,8 @@
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
 use ratatui::layout::Alignment as RAlignment;
+use ratatui::layout::Rect as RRect;
 use ratatui::symbols::Marker as RMarker;
 use ratatui::widgets::{
     Axis as RAxis, Chart as RChart, Dataset as RDataset, GraphType as RGraphType,
@@ -12,13 +14,12 @@ use crate::style::Style;
 use crate::widgets::Block;
 
 #[pyclass(module = "pyratatui", from_py_object)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub struct GraphType {
     inner: RGraphType,
 }
 
 #[pymethods]
-#[allow(clippy::trivially_copy_pass_by_ref)]
 impl GraphType {
     #[classattr]
     #[allow(non_snake_case)]
@@ -50,13 +51,12 @@ impl GraphType {
 }
 
 #[pyclass(module = "pyratatui", from_py_object)]
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub struct Marker {
     inner: RMarker,
 }
 
 #[pymethods]
-#[allow(clippy::trivially_copy_pass_by_ref)]
 impl Marker {
     #[classattr]
     #[allow(non_snake_case)]
@@ -127,14 +127,13 @@ impl Marker {
     }
 }
 
-#[pyclass(module = "pyratatui", from_py_object)]
+#[pyclass(module = "pyratatui", skip_from_py_object)]
 #[derive(Clone, Copy, Debug)]
 pub struct LegendPosition {
     inner: RLegendPosition,
 }
 
 #[pymethods]
-#[allow(clippy::trivially_copy_pass_by_ref)]
 impl LegendPosition {
     #[classattr]
     #[allow(non_snake_case)]
@@ -392,6 +391,13 @@ impl Chart {
     }
 }
 
+impl Chart {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui()?, area);
+        Ok(())
+    }
+}
+
 #[pymethods]
 impl Chart {
     #[new]
@@ -476,7 +482,7 @@ fn parse_alignment(value: &str) -> PyResult<RAlignment> {
     }
 }
 
-pub fn register_chart_widget(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+pub fn register_chart(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<GraphType>()?;
     m.add_class::<Marker>()?;
     m.add_class::<LegendPosition>()?;

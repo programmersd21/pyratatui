@@ -11,7 +11,9 @@
 //!   `BarChart::grouped(groups)`, `BarChart::vertical(groups)`, etc.
 
 use pyo3::prelude::*;
+use ratatui::Frame as RFrame;
 use ratatui::layout::Direction as RDirection;
+use ratatui::layout::Rect as RRect;
 use ratatui::text::Line as RLine;
 use ratatui::widgets::{Bar as RBar, BarChart as RBarChart, BarGroup as RBarGroup};
 
@@ -200,6 +202,13 @@ impl BarChart {
             chart = chart.label_style(s.inner);
         }
         chart
+    }
+}
+
+impl BarChart {
+    pub(crate) fn render_raw(&self, frame: &mut RFrame<'_>, area: RRect) -> PyResult<()> {
+        frame.render_widget(self.to_ratatui(), area);
+        Ok(())
     }
 }
 
