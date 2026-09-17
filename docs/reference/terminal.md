@@ -15,10 +15,14 @@ from pyratatui import Terminal
 ### Constructor
 
 ```python
-Terminal()
+Terminal(inline_height=None)
 ```
 
 Creates a new `Terminal` instance. The screen is **not** initialized until `__enter__` is called (via `with Terminal() as t:`).
+
+| Parameter | Type | Description |
+|---|---|---|
+| `inline_height` | `int \| None` | Height of an inline viewport, in lines. `None` (the default) takes over the whole screen. |
 
 ### Context Manager
 
@@ -36,6 +40,36 @@ with Terminal() as term:
 1. Disables raw mode
 2. Leaves alternate screen
 3. Suppresses `False` (does not swallow exceptions)
+
+### Inline Viewport
+
+```python
+with Terminal(inline_height=8) as term:
+    ...
+```
+
+With `inline_height` the app draws in a block of that many lines **inside the normal buffer**, at the point the cursor was on. The alternate screen is never entered, so the scrollback and whatever was printed before the app stay where they are, and anything printed afterwards continues below the block — the shape a build tool or a progress display usually wants.
+
+```python
+from pyratatui import Paragraph, Terminal
+
+print("$ deploy --to production")          # stays on screen
+
+with Terminal(inline_height=3) as term:    # three lines under it
+    for step in ("uploading", "migrating", "restarting"):
+        term.draw(
+            lambda frame, step=step: frame.render_widget(
+                Paragraph.from_string(step), frame.area
+            )
+        )
+
+print("done")                              # continues below the block
+```
+
+`frame.area` is the block, not the terminal: its `height` is the `inline_height` that was asked for. On leaving, the block is cleared and the cursor is left under it.
+
+!!! note "The terminal is asked where the cursor is"
+    An inline viewport needs the current cursor row, which it gets by writing a cursor position report (`ESC [ 6n`) and reading the answer. A terminal that never answers — some CI logs, a pipe that is not a TTY — makes `__enter__` fail with `BackendError`. Fall back to the fullscreen `Terminal()`, or to plain printing, when there is no real terminal.
 
 !!! warning "Always Use as Context Manager"
     Never call `Terminal()` without a `with` statement. If your code raises an exception, the context manager guarantees terminal restoration. Without it, your user's terminal may be left in raw mode with the alternate screen active.
@@ -121,10 +155,20 @@ from pyratatui import AsyncTerminal
 
 An asyncio-compatible wrapper around `Terminal`. All `Terminal` calls happen on the asyncio event-loop thread — never via thread-pool executors.
 
+### Constructor
+
+```python
+AsyncTerminal(inline_height=None)
+```
+
+| Parameter | Type | Description |
+|---|---|---|
+| `inline_height` | `int \| None` | Height of an inline viewport, in lines, passed straight to `Terminal`. `None` (the default) takes over the whole screen. |
+
 ### Async Context Manager
 
 ```python
-async with AsyncTerminal() as term:
+async with AsyncTerminal(inline_height=6) as term:
     ...
 ```
 

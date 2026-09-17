@@ -7,6 +7,17 @@ and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [Unreleased]
+
+### Added
+
+* `Terminal(inline_height=...)` and `AsyncTerminal(inline_height=...)` draw in a block of the
+  normal buffer instead of taking over the screen, leaving the scrollback and whatever was
+  printed before and after the app in place
+* Example `examples/40_inline_viewport.py` and reference documentation for the inline viewport
+
+---
+
 ## [0.2.9]
 
 ### Fixed

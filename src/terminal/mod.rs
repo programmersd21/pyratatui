@@ -17,7 +17,9 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 
-use ratatui::{backend::CrosstermBackend, Frame as RFrame, Terminal as RTerminal};
+use ratatui::{
+    backend::CrosstermBackend, Frame as RFrame, Terminal as RTerminal, TerminalOptions, Viewport,
+};
 
 use crate::bar_graph::BarGraph as PyBarGraph;
 use crate::button_widget::Button as PyButton;
@@ -422,8 +424,11 @@ type RatTerminal = RTerminal<CrosstermBackend<Stdout>>;
 
 /// The main terminal driver.
 ///
-/// Initialises the crossterm backend, enters alternate screen mode, and drives
-/// the render loop.
+/// Initialises the crossterm backend and drives the render loop. By default it
+/// enters the alternate screen and owns the whole terminal; pass
+/// `inline_height` to draw in a block of that many lines inside the normal
+/// buffer instead, leaving the scrollback and whatever is already on screen
+/// alone.
 ///
 /// ```python
 /// from pyratatui import Terminal, Paragraph, Text
@@ -444,27 +449,55 @@ type RatTerminal = RTerminal<CrosstermBackend<Stdout>>;
 pub struct Terminal {
     inner: Option<RatTerminal>,
     entered: bool,
+    /// Height of the inline viewport, or `None` for the alternate screen.
+    inline_height: Option<u16>,
+    /// Whether the alternate screen was entered and has to be left again.
+    alt_screen: bool,
+}
+
+impl Terminal {
+    /// Enter raw mode and build the backing terminal, inline or fullscreen.
+    fn start(&mut self) -> PyResult<()> {
+        enable_raw_mode().map_err(io_err_to_py)?;
+        let backend = CrosstermBackend::new(io::stdout());
+        let terminal = match self.inline_height {
+            Some(height) => {
+                let options = TerminalOptions {
+                    viewport: Viewport::Inline(height),
+                };
+                RTerminal::with_options(backend, options).map_err(io_err_to_py)?
+            }
+            None => {
+                execute!(io::stdout(), EnterAlternateScreen).map_err(io_err_to_py)?;
+                self.alt_screen = true;
+                RTerminal::new(backend).map_err(io_err_to_py)?
+            }
+        };
+        self.inner = Some(terminal);
+        self.entered = true;
+        Ok(())
+    }
 }
 
 #[pymethods]
 impl Terminal {
+    /// `Terminal()` takes over the screen; `Terminal(inline_height=12)` draws a
+    /// block of that many lines where the cursor is.
     #[new]
-    pub fn new() -> PyResult<Self> {
+    #[pyo3(signature = (inline_height=None))]
+    pub fn new(inline_height: Option<u16>) -> PyResult<Self> {
         Ok(Self {
             inner: None,
             entered: false,
+            inline_height,
+            alt_screen: false,
         })
     }
 
     // ── Context manager ──────────────────────────────────────────────────────
 
     pub fn __enter__(mut slf: PyRefMut<'_, Self>) -> PyResult<PyRefMut<'_, Self>> {
-        enable_raw_mode().map_err(io_err_to_py)?;
-        execute!(io::stdout(), EnterAlternateScreen).map_err(io_err_to_py)?;
-        let backend = CrosstermBackend::new(io::stdout());
-        let terminal = RTerminal::new(backend).map_err(io_err_to_py)?;
-        slf.inner = Some(terminal);
-        slf.entered = true;
+        slf.start()?;
         Ok(slf)
     }
 
@@ -480,8 +513,20 @@ impl Terminal {
 
     pub fn restore(&mut self) -> PyResult<()> {
         if self.entered {
-            disable_raw_mode().map_err(io_err_to_py)?;
-            execute!(io::stdout(), LeaveAlternateScreen).map_err(io_err_to_py)?;
+            if self.alt_screen {
+                disable_raw_mode().map_err(io_err_to_py)?;
+                execute!(io::stdout(), LeaveAlternateScreen).map_err(io_err_to_py)?;
+                self.alt_screen = false;
+            } else {
+                // An inline viewport draws in the normal buffer: clear the block it
+                // owns and put the cursor under it, so what is printed next starts on
+                // a clean line instead of over the last frame.
+                if let Some(term) = self.inner.as_mut() {
+                    term.clear().map_err(io_err_to_py)?;
+                    term.show_cursor().map_err(io_err_to_py)?;
+                }
+                disable_raw_mode().map_err(io_err_to_py)?;
+            }
             self.entered = false;
         }
         Ok(())
@@ -591,12 +636,7 @@ impl Terminal {
         mut slf: PyRefMut<'a, Self>,
         _py: Python<'_>,
     ) -> PyResult<PyRefMut<'a, Self>> {
-        enable_raw_mode().map_err(io_err_to_py)?;
-        execute!(io::stdout(), EnterAlternateScreen).map_err(io_err_to_py)?;
-        let backend = CrosstermBackend::new(io::stdout());
-        let terminal = RTerminal::new(backend).map_err(io_err_to_py)?;
-        slf.inner = Some(terminal);
-        slf.entered = true;
+        slf.start()?;
         Ok(slf)
     }
 

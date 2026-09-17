@@ -56,13 +56,21 @@ class AsyncTerminal:
     ```
     """
 
-    def __init__(self) -> None:
+    def __init__(self, inline_height: int | None = None) -> None:
+        """Wrap a terminal driver.
+
+        Args:
+            inline_height: Draw in a block of that many lines inside the normal
+                buffer instead of taking over the screen. ``None`` (the default)
+                uses the alternate screen, as before.
+        """
         self._term: Terminal | None = None
+        self._inline_height = inline_height
 
     # ── Context manager ──────────────────────────────────────────────────────
 
     async def __aenter__(self) -> AsyncTerminal:
-        self._term = Terminal()
+        self._term = Terminal(self._inline_height)
         self._term.__enter__()
         return self
 
