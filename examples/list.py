@@ -1,23 +1,18 @@
 """
-examples/04_list_navigation.py — Keyboard-navigable list.
+list.py — Keyboard-navigable list.
 
 Demonstrates: List, ListItem, ListState, keyboard input handling.
 ↑/↓  Home  End  to navigate,  q  to quit.
-
-Fixes vs original:
-  - Removed all double-width emoji (caused border corruption in every terminal
-    because ratatui counts them as 1 column while the terminal renders them as 2)
-  - select_next() / select_previous() wrap around by default in ratatui 0.30;
-    replaced with manual min/max clamping so holding Down on Pluto stays put
-  - Richer detail panel with per-span colour using Line / Span / Text
-  - Keybindings shown inside the detail panel (no extra area needed)
 """
+
+from typing import TypedDict
 
 from pyratatui import (
     Block,
     Color,
     Constraint,
     Direction,
+    Frame,
     Layout,
     Line,
     List,
@@ -32,7 +27,17 @@ from pyratatui import (
 
 # ── Planet data (no emoji — use reliable ASCII/single-width symbols) ──────────
 
-PLANETS = [
+
+class Planet(TypedDict):
+    name: str
+    status: str
+    order: int
+    dist: str
+    moons: int
+    desc: list[str]
+
+
+PLANETS: list[Planet] = [
     {
         "name": "Earth",
         "status": "Online",
@@ -140,7 +145,7 @@ def main() -> None:
 
             planet = PLANETS[sel]
 
-            def ui(frame, _sel=sel, _planet=planet):
+            def ui(frame: Frame, _sel: int = sel, _planet: Planet = planet) -> None:
                 area = frame.area
                 chunks = (
                     Layout()
@@ -175,12 +180,10 @@ def main() -> None:
                 sc = status_color(_planet["status"])
                 sym = status_symbol(_planet["status"])
 
-                lines: list = [
+                lines: list[Line] = [
                     Line(
                         [
-                            Span(
-                                f"  {_planet['name']}", Style().fg(Color.white()).bold()
-                            ),
+                            Span(f"  {_planet['name']}", Style().fg(Color.white()).bold()),
                             Span(
                                 f"   planet #{_planet['order']}",
                                 Style().fg(Color.dark_gray()),
@@ -218,9 +221,7 @@ def main() -> None:
                     Line([]),
                 ]
                 for desc_line in _planet["desc"]:
-                    lines.append(
-                        Line([Span(f"  {desc_line}", Style().fg(Color.white()))])
-                    )
+                    lines.append(Line([Span(f"  {desc_line}", Style().fg(Color.white()))]))
                 lines += [
                     Line([]),
                     Line(

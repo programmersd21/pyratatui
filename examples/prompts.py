@@ -1,5 +1,5 @@
 """
-examples/23_prompt_text.py — Interactive text prompt demo.
+prompts.py — Interactive text prompt demo.
 
 Demonstrates the stateful TextPrompt / TextState API:
   - TextState holds the mutable input value, cursor and status
@@ -19,6 +19,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Layout,
     Paragraph,
     Style,
@@ -57,7 +58,7 @@ with Terminal() as term:
 
         _state = state
 
-        def ui(frame, _s=_state):
+        def ui(frame: Frame, _s: TextState = _state) -> None:
             area = frame.area
 
             # Split: hints on the left, prompt on the right.
@@ -70,10 +71,7 @@ with Terminal() as term:
 
             frame.render_widget(
                 Paragraph.from_string(HINT).block(
-                    Block()
-                    .bordered()
-                    .title(" Key Bindings ")
-                    .style(Style().fg(Color.gray()))
+                    Block().bordered().title(" Key Bindings ").style(Style().fg(Color.gray()))
                 ),
                 cols[0],
             )
@@ -93,10 +91,7 @@ with Terminal() as term:
             )
 
             frame.render_widget(
-                Block()
-                .bordered()
-                .title(" Enter your name ")
-                .style(Style().fg(Color.cyan())),
+                Block().bordered().title(" Enter your name ").style(Style().fg(Color.cyan())),
                 cols[1],
             )
 

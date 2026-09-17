@@ -1,5 +1,5 @@
 """
-examples/06_table_dynamic.py — Dynamic table with live-updating data.
+table.py — Dynamic table with live-updating data.
 
 Demonstrates: Table, Row, Cell, TableState, live data mutation.
 ↑/↓ to select rows, r to reset data, q to quit.
@@ -7,6 +7,7 @@ Demonstrates: Table, Row, Cell, TableState, live data mutation.
 
 import random
 import time
+from typing import TypedDict
 
 from pyratatui import (
     Block,
@@ -14,6 +15,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Layout,
     Paragraph,
     Row,
@@ -24,16 +26,21 @@ from pyratatui import (
 )
 
 
-def random_data():
+class Service(TypedDict):
+    name: str
+    cpu: int
+    mem: int
+    status: str
+
+
+def random_data() -> list[Service]:
     services = ["nginx", "postgres", "redis", "kafka", "prometheus", "grafana"]
     return [
         {
             "name": s,
             "cpu": random.randint(0, 100),
             "mem": random.randint(0, 100),
-            "status": random.choice(
-                ["Running", "Running", "Running", "Degraded", "Stopped"]
-            ),
+            "status": random.choice(["Running", "Running", "Running", "Degraded", "Stopped"]),
         }
         for s in services
     ]
@@ -45,7 +52,7 @@ state.select(0)
 last_update = time.time()
 
 
-def cpu_style(pct):
+def cpu_style(pct: float) -> Style:
     if pct < 50:
         return Style().fg(Color.green())
     if pct < 80:
@@ -53,7 +60,7 @@ def cpu_style(pct):
     return Style().fg(Color.red())
 
 
-def status_style(s):
+def status_style(s: str) -> Style:
     return {
         "Running": Style().fg(Color.green()),
         "Degraded": Style().fg(Color.yellow()),
@@ -68,7 +75,7 @@ with Terminal() as term:
             data = random_data()
             last_update = now
 
-        def ui(frame, rows=data):
+        def ui(frame: Frame, rows: list[Service] = data) -> None:
             chunks = (
                 Layout()
                 .direction(Direction.Vertical)
@@ -97,7 +104,6 @@ with Terminal() as term:
                 for r in rows
             ]
 
-            # ✅ Correct API: Table(rows).column_widths([...]).header(row)
             table = (
                 Table(tbl_rows)
                 .column_widths(

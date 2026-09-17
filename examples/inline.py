@@ -1,5 +1,5 @@
 """
-examples/40_inline_viewport.py — Progress in a few lines of the normal buffer.
+inline.py — Progress in a few lines of the normal buffer.
 
 Demonstrates: Terminal(inline_height=...), LineGauge, Layout.
 The shell prompt above stays where it is, and the summary is printed below the
@@ -12,6 +12,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Layout,
     LineGauge,
     Paragraph,
@@ -36,7 +37,7 @@ with Terminal(inline_height=3) as term:
     while step < len(STEPS):
         ratio = (step + 1) / len(STEPS)
 
-        def ui(frame, _step=step, _ratio=ratio):
+        def ui(frame: Frame, _step: int = step, _ratio: float = ratio) -> None:
             title, gauge = (
                 Layout()
                 .direction(Direction.Vertical)
@@ -44,16 +45,13 @@ with Terminal(inline_height=3) as term:
                 .split(frame.area)
             )
             frame.render_widget(
-                Paragraph.from_string(
-                    f"{STEPS[_step]}… {int(_ratio * 100)}%"
-                ).style(Style().fg(Color.cyan())),
+                Paragraph.from_string(f"{STEPS[_step]}… {int(_ratio * 100)}%").style(
+                    Style().fg(Color.cyan())
+                ),
                 title,
             )
             frame.render_widget(
-                LineGauge()
-                .ratio(_ratio)
-                .label("")
-                .gauge_style(Style().fg(Color.green())),
+                LineGauge().ratio(_ratio).label("").gauge_style(Style().fg(Color.green())),
                 gauge,
             )
 

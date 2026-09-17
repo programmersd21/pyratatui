@@ -1,16 +1,16 @@
 """
-examples/01_hello_world.py — Minimal hello world.
+hello_world.py — Minimal hello world.
 
 Demonstrates: Terminal context manager, Paragraph, Block, Style, Color.
 Press q to quit.
 """
 
-from pyratatui import Block, Color, Paragraph, Style, Terminal
+from pyratatui import Block, Color, Frame, Paragraph, Style, Terminal
 
 with Terminal() as term:
     while True:
 
-        def ui(frame):
+        def ui(frame: Frame) -> None:
             frame.render_widget(
                 Paragraph.from_string("Hello, pyratatui! 🐀  Press q to quit.")
                 .block(Block().bordered().title("Hello World"))

@@ -1,5 +1,5 @@
 """
-examples/dashboard.py — Full-featured dashboard demo.
+dashboard.py — Full-featured dashboard demo.
 
 Tabs
 ----
@@ -12,13 +12,6 @@ Navigation
   ↑/↓          — navigate list / table / scroll logs
   Home / End   — (Logs tab) jump to oldest / newest entry
   q / Ctrl-C   — quit
-
-Fixes vs original
------------------
-  - select_next() / select_previous() wrap around in ratatui 0.30;
-    all navigation now uses manual min/max clamping.
-  - Tab-aware status bar shows correct keybindings per tab.
-  - Logs tab is fully implemented.
 """
 
 from __future__ import annotations
@@ -26,6 +19,7 @@ from __future__ import annotations
 import math
 import random
 import time
+from typing import TypedDict
 
 from pyratatui import (
     Bar,
@@ -37,6 +31,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Gauge,
     Layout,
     Line,
@@ -57,7 +52,15 @@ from pyratatui import (
 
 # ── Simulated server data ─────────────────────────────────────────────────────
 
-SERVERS = [
+
+class Server(TypedDict):
+    name: str
+    cpu: int
+    mem: int
+    status: str
+
+
+SERVERS: list[Server] = [
     {"name": "web-01", "cpu": 23, "mem": 45, "status": "Running"},
     {"name": "web-02", "cpu": 5, "mem": 30, "status": "Running"},
     {"name": "db-01", "cpu": 67, "mem": 80, "status": "Running"},
@@ -134,8 +137,8 @@ def log_level_color(level: str) -> Color:
 # ── Status-bar spans helper ───────────────────────────────────────────────────
 
 
-def _help_spans(pairs: list[tuple[str, str]]) -> list:
-    spans: list = [Span("  ")]
+def _help_spans(pairs: list[tuple[str, str]]) -> list[Span]:
+    spans: list[Span] = [Span("  ")]
     for key, desc in pairs:
         spans.append(Span(key, Style().fg(Color.yellow()).bold()))
         spans.append(Span(f":{desc}   ", Style().fg(Color.dark_gray())))
@@ -187,13 +190,13 @@ def main() -> None:
 
             # ─────────────────────────────────────────────────────────────────
             def ui(
-                frame,
-                _t=t,
-                _ti=ti,
-                _srv=srv,
-                _lf=lf,
-                _lc=lc,
-            ):
+                frame: Frame,
+                _t: int = t,
+                _ti: int = ti,
+                _srv: Server = srv,
+                _lf: bool = lf,
+                _lc: dict[str, int] = lc,
+            ) -> None:
                 area = frame.area
 
                 # Dynamic bottom-panel height:
@@ -280,10 +283,7 @@ def main() -> None:
                     frame.render_stateful_list(
                         List(srv_items)
                         .block(
-                            Block()
-                            .bordered()
-                            .title(" Servers ")
-                            .border_type(BorderType.Rounded)
+                            Block().bordered().title(" Servers ").border_type(BorderType.Rounded)
                         )
                         .highlight_style(Style().fg(Color.yellow()).bold())
                         .highlight_symbol("▶ "),
@@ -298,9 +298,7 @@ def main() -> None:
                         .data(history)
                         .max(100)
                         .style(Style().fg(cpu_color(_srv["cpu"])))
-                        .block(
-                            Block().bordered().title(f" CPU History — {_srv['name']} ")
-                        ),
+                        .block(Block().bordered().title(f" CPU History — {_srv['name']} ")),
                         left_panels[1],
                     )
 
@@ -324,13 +322,9 @@ def main() -> None:
                         Row(
                             [
                                 Cell(s["name"]),
-                                Cell(f"{s['cpu']}%").style(
-                                    Style().fg(cpu_color(s["cpu"]))
-                                ),
+                                Cell(f"{s['cpu']}%").style(Style().fg(cpu_color(s["cpu"]))),
                                 Cell(f"{s['mem']}%"),
-                                Cell(s["status"]).style(
-                                    Style().fg(status_color(s["status"]))
-                                ),
+                                Cell(s["status"]).style(Style().fg(status_color(s["status"]))),
                             ]
                         )
                         for s in SERVERS
@@ -338,7 +332,7 @@ def main() -> None:
                     frame.render_stateful_table(
                         Table(
                             rows,
-                            [
+                            column_widths=[
                                 Constraint.fill(1),
                                 Constraint.length(7),
                                 Constraint.length(9),
@@ -380,9 +374,7 @@ def main() -> None:
                     frame.render_widget(
                         Gauge()
                         .percent(_srv["cpu"])
-                        .label(
-                            f"{_srv['name']}  CPU: {_srv['cpu']}%   MEM: {_srv['mem']}%"
-                        )
+                        .label(f"{_srv['name']}  CPU: {_srv['cpu']}%   MEM: {_srv['mem']}%")
                         .style(Style().fg(cpu_color(_srv["cpu"])))
                         .gauge_style(Style().fg(Color.dark_gray()))
                         .block(Block().bordered().title(" Selected Server ")),
@@ -439,9 +431,7 @@ def main() -> None:
                                 Span("auto-follow: ", Style().fg(Color.dark_gray())),
                                 Span(
                                     "ON " if _lf else "OFF",
-                                    Style()
-                                    .fg(Color.green() if _lf else Color.yellow())
-                                    .bold(),
+                                    Style().fg(Color.green() if _lf else Color.yellow()).bold(),
                                 ),
                                 Span(
                                     " (scroll up to pause)",

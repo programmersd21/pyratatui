@@ -1,5 +1,5 @@
 """
-examples/07_async_reactive.py — Async reactive UI with background data fetching.
+async_app.py — Async reactive UI with background data fetching.
 
 Demonstrates: AsyncTerminal, asyncio tasks, reactive data updates, live counter.
 """
@@ -8,6 +8,7 @@ import asyncio
 import contextlib
 import random
 import time
+from typing import TypedDict
 
 from pyratatui import (
     AsyncTerminal,
@@ -15,6 +16,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Gauge,
     Layout,
     Line,
@@ -26,7 +28,18 @@ from pyratatui import (
 )
 
 # Shared state (updated by background task)
-state = {
+
+
+class Metrics(TypedDict):
+    cpu: int
+    mem: int
+    requests: int
+    history: list[int]
+    tick: int
+    log: list[str]
+
+
+state: Metrics = {
     "cpu": 0,
     "mem": 0,
     "requests": 0,
@@ -36,7 +49,7 @@ state = {
 }
 
 
-async def simulate_metrics():
+async def simulate_metrics() -> None:
     """Background task: simulate live server metrics."""
     while True:
         await asyncio.sleep(0.3)
@@ -52,7 +65,7 @@ async def simulate_metrics():
             state["log"] = state["log"][-6:]
 
 
-async def main():
+async def main() -> None:
     metrics_task = asyncio.create_task(simulate_metrics())
 
     async with AsyncTerminal() as term:
@@ -68,8 +81,14 @@ async def main():
             tick = state["tick"]
 
             def ui(
-                frame, _cpu=cpu, _mem=mem, _reqs=reqs, _hist=hist, _log=log, _tick=tick
-            ):
+                frame: Frame,
+                _cpu: int = cpu,
+                _mem: int = mem,
+                _reqs: int = reqs,
+                _hist: list[int] = hist,
+                _log: list[str] = log,
+                _tick: int = tick,
+            ) -> None:
                 area = frame.area
                 outer = (
                     Layout()
@@ -87,9 +106,7 @@ async def main():
                 )
 
                 cpu_color = (
-                    Color.green()
-                    if _cpu < 50
-                    else Color.yellow() if _cpu < 80 else Color.red()
+                    Color.green() if _cpu < 50 else Color.yellow() if _cpu < 80 else Color.red()
                 )
 
                 # CPU gauge

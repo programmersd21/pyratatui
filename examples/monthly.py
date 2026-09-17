@@ -1,26 +1,17 @@
 """
-examples/25_calendar.py — Interactive calendar widget demo.
+monthly.py — Interactive calendar widget demo.
 
 Demonstrates:
   - Monthly calendar widget
   - CalendarEventStore with custom date styles
   - CalendarDate (today, from_ymd)
   - Keyboard navigation (prev/next month, prev/next year, jump-to-today)
-  - contextlib.suppress() instead of bare try/except/pass
 
 Controls:
   Left / Right   Previous / next month
   Up / Down      Previous / next year
   t              Jump to today
   q              Quit (returns currently-viewed date as datetime.date)
-
-Return value
-------------
-  main() returns the currently-viewed date as a standard ``datetime.date``
-  object so callers can use the result::
-
-      from examples.25_calendar import main
-      selected = main()          # datetime.date(2026, 3, 1)
 """
 
 from __future__ import annotations
@@ -36,6 +27,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Layout,
     Line,
     Monthly,
@@ -116,8 +108,8 @@ def make_store(year: int, month: int) -> CalendarEventStore:
 # ── UI ────────────────────────────────────────────────────────────────────────
 
 
-def ui(frame: object) -> None:
-    area = frame.area  # type: ignore[attr-defined]
+def ui(frame: Frame) -> None:
+    area = frame.area
 
     outer = (
         Layout()
@@ -133,7 +125,7 @@ def ui(frame: object) -> None:
     )
 
     # Title bar
-    frame.render_widget(  # type: ignore[attr-defined]
+    frame.render_widget(
         Paragraph.from_string(f"  {_MONTH_NAMES[_month]}  {_year}")
         .block(Block().bordered().title(" Calendar Widget Demo "))
         .centered()
@@ -154,7 +146,7 @@ def ui(frame: object) -> None:
         cal_date = CalendarDate.from_ymd(_year, _month, 1)
         store = make_store(_year, _month)
 
-        frame.render_widget(  # type: ignore[attr-defined]
+        frame.render_widget(
             Monthly(cal_date, store)
             .block(Block().bordered().title(" Monthly "))
             .show_month_header(Style().bold().fg(Color.cyan()))
@@ -183,13 +175,13 @@ def ui(frame: object) -> None:
             ),
         ]
     )
-    frame.render_widget(  # type: ignore[attr-defined]
+    frame.render_widget(
         Paragraph(legend).block(Block().bordered().title(" Legend ")),
         body[1],
     )
 
     # Controls bar
-    frame.render_widget(  # type: ignore[attr-defined]
+    frame.render_widget(
         Paragraph.from_string(
             "  ←/→: prev/next month    ↑/↓: prev/next year    t: today    q: quit"
         )

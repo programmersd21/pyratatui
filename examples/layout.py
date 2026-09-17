@@ -1,5 +1,5 @@
 """
-examples/02_layout.py — Multi-panel layout with nested splits.
+layout.py — Multi-panel layout with nested splits.
 
 Demonstrates: Layout, Constraint, Direction, nested splits.
 Press q to quit.
@@ -10,6 +10,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Layout,
     Paragraph,
     Style,
@@ -19,16 +20,14 @@ from pyratatui import (
 with Terminal() as term:
     while True:
 
-        def ui(frame):
+        def ui(frame: Frame) -> None:
             area = frame.area
 
             # Outer: header | body | footer
             outer = (
                 Layout()
                 .direction(Direction.Vertical)
-                .constraints(
-                    [Constraint.length(3), Constraint.fill(1), Constraint.length(1)]
-                )
+                .constraints([Constraint.length(3), Constraint.fill(1), Constraint.length(1)])
                 .split(area)
             )
 
@@ -51,9 +50,7 @@ with Terminal() as term:
                 body[0],
             )
             frame.render_widget(
-                Paragraph.from_string(
-                    "Main content\n\nResize the terminal to see layout adapt."
-                )
+                Paragraph.from_string("Main content\n\nResize the terminal to see layout adapt.")
                 .block(Block().bordered().title("Content"))
                 .wrap(True),
                 body[1],

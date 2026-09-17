@@ -1,5 +1,5 @@
 """
-examples/05_progress_bar.py — Live sync progress bar.
+gauge.py — Live sync progress bar.
 
 Demonstrates: Gauge, LineGauge, live value updates, time-based animation.
 """
@@ -11,6 +11,7 @@ from pyratatui import (
     Color,
     Constraint,
     Direction,
+    Frame,
     Gauge,
     Layout,
     Line,
@@ -30,7 +31,7 @@ with Terminal() as term:
     for step in range(STEPS + 1):
         pct = int(step / STEPS * 100)
 
-        def ui(frame, p=pct, s=step):
+        def ui(frame: Frame, p: int = pct, s: int = step) -> None:
             outer = (
                 Layout()
                 .direction(Direction.Vertical)
@@ -46,9 +47,7 @@ with Terminal() as term:
             )
 
             # Info pane
-            color = (
-                Color.green() if p < 40 else Color.yellow() if p < 80 else Color.red()
-            )
+            color = Color.green() if p < 40 else Color.yellow() if p < 80 else Color.red()
             info = Text(
                 [
                     Line([Span("Processing files…", Style().fg(Color.white()).bold())]),
@@ -88,9 +87,9 @@ with Terminal() as term:
             )
 
             frame.render_widget(
-                Paragraph.from_string(
-                    f" {p}% — {'█' * (p // 5)}{'░' * (20 - p // 5)}"
-                ).style(Style().fg(color)),
+                Paragraph.from_string(f" {p}% — {'█' * (p // 5)}{'░' * (20 - p // 5)}").style(
+                    Style().fg(color)
+                ),
                 outer[3],
             )
 

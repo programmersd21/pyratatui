@@ -1,16 +1,16 @@
 """
-examples/03_styled_text.py — Rich styled text with Span, Line, Text.
+styled_text.py — Rich styled text with Span, Line, Text.
 
 Demonstrates: Span, Line, Text, Style, Color, Modifier.
 Press q to quit.
 """
 
-from pyratatui import Block, Color, Line, Paragraph, Span, Style, Terminal, Text
+from pyratatui import Block, Color, Frame, Line, Paragraph, Span, Style, Terminal, Text
 
 with Terminal() as term:
     while True:
 
-        def ui(frame):
+        def ui(frame: Frame) -> None:
             text = Text(
                 [
                     Line(
