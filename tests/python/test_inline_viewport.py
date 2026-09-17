@@ -5,7 +5,6 @@ import sys
 import textwrap
 
 import pytest
-
 from pyratatui import AsyncTerminal, Terminal
 
 ALT_SCREEN_ON = b"\x1b[?1049h"
@@ -46,7 +45,7 @@ ASYNC_APP = """
 posix_only = pytest.mark.skipif(os.name != "posix", reason="needs a pty")
 
 
-def run_in_pty(source, rows=24, cols=80, timeout=20.0):
+def run_in_pty(source: str, rows: int = 24, cols: int = 80, timeout: float = 20.0) -> bytes:
     """Run source in a child process on a pty and return everything it drew."""
     import fcntl
     import pty
@@ -93,50 +92,50 @@ def run_in_pty(source, rows=24, cols=80, timeout=20.0):
 
 
 class TestInlineHeightArgument:
-    def test_terminal_takes_an_inline_height(self):
+    def test_terminal_takes_an_inline_height(self) -> None:
         assert "active=false" in repr(Terminal(inline_height=5))
 
-    def test_terminal_still_defaults_to_fullscreen(self):
+    def test_terminal_still_defaults_to_fullscreen(self) -> None:
         assert "active=false" in repr(Terminal())
 
-    def test_async_terminal_takes_an_inline_height(self):
+    def test_async_terminal_takes_an_inline_height(self) -> None:
         assert "active=False" in repr(AsyncTerminal(inline_height=5))
 
-    def test_the_height_may_be_given_by_position(self):
+    def test_the_height_may_be_given_by_position(self) -> None:
         assert repr(Terminal(5)) == repr(Terminal(inline_height=5))
 
 
 @pytest.fixture(scope="module")
-def inline():
+def inline() -> bytes:
     return run_in_pty(APP.format(height="inline_height=5"))
 
 
 @pytest.fixture(scope="module")
-def fullscreen():
+def fullscreen() -> bytes:
     return run_in_pty(APP.format(height=""))
 
 
 @posix_only
 class TestDrawingInline:
-    def test_inline_stays_out_of_the_alternate_screen(self, inline):
+    def test_inline_stays_out_of_the_alternate_screen(self, inline: bytes) -> None:
         assert ALT_SCREEN_ON not in inline
         assert ALT_SCREEN_OFF not in inline
 
-    def test_inline_draws_what_it_was_told_to(self, inline):
+    def test_inline_draws_what_it_was_told_to(self, inline: bytes) -> None:
         assert b"INSIDE-THE-APP" in inline
 
-    def test_inline_keeps_what_was_printed_around_it(self, inline):
+    def test_inline_keeps_what_was_printed_around_it(self, inline: bytes) -> None:
         assert b"BEFORE-THE-APP" in inline
         assert b"AFTER-THE-APP" in inline
 
-    def test_the_default_still_takes_over_the_screen(self, fullscreen):
+    def test_the_default_still_takes_over_the_screen(self, fullscreen: bytes) -> None:
         assert ALT_SCREEN_ON in fullscreen
         assert ALT_SCREEN_OFF in fullscreen
 
-    def test_the_screen_it_took_over_is_given_back(self, fullscreen):
+    def test_the_screen_it_took_over_is_given_back(self, fullscreen: bytes) -> None:
         assert fullscreen.index(ALT_SCREEN_ON) < fullscreen.index(ALT_SCREEN_OFF)
 
-    def test_async_terminal_draws_inline_too(self):
+    def test_async_terminal_draws_inline_too(self) -> None:
         drawn = run_in_pty(ASYNC_APP)
 
         assert b"ASYNC-INLINE" in drawn
