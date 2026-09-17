@@ -196,7 +196,8 @@ jobs:
       - name: Determine previous tag
         id: prev
         run: |
-          git fetch --tags
+          # --force: a stale local tag must never fail a release fetch.
+          git fetch --tags --force
           CURRENT="v${{ steps.version.outputs.version }}"
           PREV=$(git tag --sort=-v:refname \
                  | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+' \
