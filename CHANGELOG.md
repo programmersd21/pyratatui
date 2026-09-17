@@ -7,14 +7,62 @@ and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [Unreleased]
+## [0.3.0]
 
 ### Added
 
 * `Terminal(inline_height=...)` and `AsyncTerminal(inline_height=...)` draw in a block of the
   normal buffer instead of taking over the screen, leaving the scrollback and whatever was
   printed before and after the app in place
-* Example `examples/40_inline_viewport.py` and reference documentation for the inline viewport
+* Example `examples/inline.py`
+* `KeyEvent` is now importable from the top-level package (previously only
+  available as the undocumented `PyKeyEvent`)
+* `Table` constructor accepts `column_widths`, `header`, and `footer` directly
+* Rust unit tests for key-code names, the prompt editing state machine,
+  and calendar dates (`cargo test`)
+* `tests/python/test_examples.py` byte-compiles every example
+
+### Changed
+
+* Target Ratatui 0.30.2 with a minimal feature set (`crossterm_0_29`,
+  `widget-calendar`); crossterm 0.29 is the single backend version
+* Crate edition 2024, MSRV Rust 1.88
+* `time` dependency no longer enables `local-offset`
+* `MapResolution` is a proper enum (`MapResolution.Low` / `.High`);
+  `Map().resolution(...)` takes the value instead of a reference
+* Examples renamed to plain names (`hello_world.py`, `dashboard.py`, …)
+* Python package flattened: async runtime and `run_app` helpers live in
+  `pyratatui.app`; the native stub is the single `pyratatui/_pyratatui.pyi`
+* `Frame` rendering dispatches through one uniform per-widget method instead
+  of special-cased branches
+* `Frame.size` alias removed; use `Frame.area`
+* `Terminal` async context-manager dunders removed; use `AsyncTerminal`
+
+### Removed
+
+* Third-party widget bindings and their dependencies: `tui-popup`,
+  `tui-scrollview`, `tui-textarea`, `tui-qrcode`, `tui-bar-graph`,
+  `tui-tree-widget`, `tui-markdown`, `tui-logger`, `ratatui-image`,
+  `throbber-widgets-tui`, `tui-menu`, `tui-piechart`, `tui-checkbox`
+  (and transitive `qrcode`, `colorgrad`, `image`, `log` dependencies)
+* TachyonFX effects engine (`Effect`, `EffectManager`, `compile_effect`, …)
+* Ratatui 0.29 compatibility layer (`ratatui_compat` and its `unsafe` bridging)
+* Tokio dependency (was unused by the binding)
+* `pyratatui` CLI, app manager subpackage, and `typer` dependency
+* Custom `Button` widget and `CrosstermBackend` stub class
+* `docs/` site, `gallery/`, `scripts/`, root `test_all_examples.py`
+
+### Fixed
+
+* Type stub now matches the runtime API it documents
+* Settled prompts (completed or aborted) no longer accept further input
+  through the internal key dispatch
+* Dashboard example used the removed `Table(rows, widths, header=...)`
+  constructor and raised `TypeError`; it now uses
+  `Table(rows).column_widths(...).header(...)`
+* Calendar example was named `calendar.py` and shadowed the standard library
+  `calendar` module at runtime; renamed to `monthly.py`
+* `mypy --strict` passes on the whole repository, including examples and tests
 
 ---
 
@@ -548,7 +596,7 @@ items = [
     TreeItem("Documents", [TreeItem("report.txt"), TreeItem("notes.md")]),
     TreeItem("Downloads"),
 ]
-tree  = Tree(items).block(Block().bordered().title(" Files "))
+tree = Tree(items).block(Block().bordered().title(" Files "))
 state = TreeState()
 state.select([0])
 frame.render_stateful_tree(tree, area, state)
@@ -577,7 +625,7 @@ init_logger("debug")
 log_message("info", "Application started")
 
 widget = TuiLoggerWidget().block(Block().bordered())
-state  = TuiWidgetState()
+state = TuiWidgetState()
 frame.render_stateful_logger(widget, area, state)
 ```
 
@@ -589,7 +637,7 @@ Display PNG/JPEG images using unicode halfblocks or native graphics protocols.
 from pyratatui import ImagePicker, ImageWidget
 
 picker = ImagePicker.halfblocks()
-state  = picker.load("./photo.png")
+state = picker.load("./photo.png")
 widget = ImageWidget()
 frame.render_stateful_image(widget, area, state)
 ```
@@ -620,9 +668,9 @@ Three new Python types expose ratatui's built-in calendar widget:
 ```python
 from pyratatui import CalendarDate
 
-today = CalendarDate.today()                    # UTC today
-d     = CalendarDate.from_ymd(2024, 3, 15)     # March 15, 2024
-print(d.year, d.month, d.day)                   # 2024 3 15
+today = CalendarDate.today()  # UTC today
+d = CalendarDate.from_ymd(2024, 3, 15)  # March 15, 2024
+print(d.year, d.month, d.day)  # 2024 3 15
 ```
 
 - `from_ymd(year, month, day)` raises `ValueError` for invalid dates.

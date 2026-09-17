@@ -1,106 +1,45 @@
-# Contributing Guide
+# Contributing
 
-Thank you for your interest in contributing! 🎉
-We welcome all kinds of contributions—bug reports, feature requests, documentation improvements, and code.
+## Setup
 
----
+```bash
+git clone https://github.com/pyratatui/pyratatui.git
+cd pyratatui
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+pip install maturin
+maturin develop
+```
 
-## 📌 Getting Started
+Rust source lives in `src/`, the Python package in `python/pyratatui/`.
 
-1. Fork the repository
-2. Clone your fork:
+## Checks
 
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
-   ```
-3. Navigate into the project directory:
+Run these before opening a pull request:
 
-   ```bash
-   cd your-repo
-   ```
-4. Create a new branch:
+```bash
+pytest
+cargo test
+cargo clippy --all-targets -- -D warnings
+cargo fmt --all -- --check
+ruff check . && ruff format --check .
+mypy .
+```
 
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+After changing Rust code, re-run `maturin develop` before `pytest`.
 
----
+## Guidelines
 
-## 🛠️ Development Process
+* Keep changes focused; pyratatui is a binding library, not a widget
+  ecosystem — new third-party integrations belong in separate packages.
+* Match the existing style: small functions, direct conversions, comments
+  only where something is non-obvious.
+* Add tests for new behavior; update `CHANGELOG.md` under `[Unreleased]`.
+* Public API changes also need updates to
+  `python/pyratatui/_pyratatui.pyi` and `python/pyratatui/__init__.py`.
 
-* Make sure your code follows the existing style and conventions
-* Write clear, concise commit messages
-* Keep changes focused and minimal
-* Add or update documentation as needed
+## Issues
 
----
-
-## ✅ Testing
-
-* Ensure your changes do not break existing functionality
-* Run all relevant tests before submitting a pull request
-* Add new tests if your changes introduce new functionality
-
----
-
-## 🧹 Code Style
-
-* Follow the project's coding standards
-* Use consistent formatting
-* Keep code readable and well-commented where necessary
-
----
-
-## 🚀 Submitting Changes
-
-1. Push your branch:
-
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-2. Open a Pull Request (PR)
-3. Provide a clear description of your changes:
-
-   * What does this PR do?
-   * Why is it needed?
-   * Any relevant screenshots or logs
-
----
-
-## 🐛 Reporting Issues
-
-When creating an issue, please include:
-
-* A clear and descriptive title
-* Steps to reproduce the problem
-* Expected vs actual behavior
-* Screenshots (if applicable)
-* Environment details (OS, version, etc.)
-
----
-
-## 💡 Feature Requests
-
-We welcome ideas! When suggesting a feature:
-
-* Describe the problem you're trying to solve
-* Explain your proposed solution
-* Include any alternatives you've considered
-
----
-
-## 🤝 Code of Conduct
-
-Please be respectful and constructive. We aim to maintain a welcoming and inclusive community.
-
----
-
-## 📄 License
-
-By contributing, you agree that your contributions will be licensed under the same license as this project.
-
----
-
-## 🙌 Thank You
-
-Your contributions help make this project better for everyone!
+Include steps to reproduce, expected vs. actual behavior, and your OS,
+Python, and Rust versions.

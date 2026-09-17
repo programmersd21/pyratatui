@@ -1,6 +1,10 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
   workflow_dispatch:
 
 concurrency:
@@ -14,8 +18,43 @@ env:
   MATURIN_VERSION: "v1.8.1"
 
 jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        run: rustup toolchain install stable --profile minimal --component clippy,rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "pyratatui-check"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rust fmt
+        run: cargo fmt --all -- --check
+
+      - name: Rust clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Rust tests
+        run: cargo test
+
+      - name: Python tests
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install maturin pytest
+          maturin develop
+          pytest
+
   build:
     name: Build · ${{ matrix.name }}
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ${{ matrix.runner }}
 
     strategy:
@@ -110,6 +149,7 @@ jobs:
 
   release:
     name: GitHub Release & PyPI Publish
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-latest
     environment: pypi
@@ -172,9 +212,9 @@ jobs:
             echo "## pyratatui v${VERSION}"
             echo ""
             if [ -z "$PREV" ]; then
-              echo "_🎉 Initial release_"
+              echo "_Initial release_"
             else
-              echo "### 📜 Full changelog"
+              echo "### Full changelog"
               echo "https://github.com/${{ github.repository }}/compare/${PREV}...v${VERSION}"
             fi
           } > release_body.md
@@ -198,4 +238,3 @@ jobs:
             sha/SHA256SUMS
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
