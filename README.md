@@ -123,8 +123,8 @@ cargo fmt --all -- --check
 ruff check . && ruff format --check .
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](https://raw.githubusercontent.com/pyratatui/pyratatui/main/CONTRIBUTING.md) for details.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](https://raw.githubusercontent.com/pyratatui/pyratatui/main/LICENSE).
