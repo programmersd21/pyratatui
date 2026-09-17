@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="500" viewBox="0 0 1600 500" role="img" aria-label="pyratatui — Python bindings for Ratatui, powered by Rust">
+  <title>pyratatui banner</title>
+  <defs>
+    <clipPath id="card">
+      <rect x="10" y="10" width="1580" height="480" rx="30"/>
+    </clipPath>
+    <radialGradient id="washBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#DCEBFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#DCEBFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washLav" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E7DEFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#E7DEFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="washCyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#DDF7F3" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#DDF7F3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowLav" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E7DEFF" stop-opacity="0.85"/>
+      <stop offset="70%" stop-color="#E7DEFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#E7DEFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gridFade" cx="46%" cy="48%" r="65%">
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <mask id="gridMask">
+      <rect x="10" y="10" width="1580" height="480" fill="url(#gridFade)"/>
+    </mask>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#111318" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- card -->
+  <rect x="10" y="10" width="1580" height="480" rx="30" fill="#F8F9FB"/>
+  <g clip-path="url(#card)">
+    <ellipse cx="330" cy="110" rx="540" ry="300" fill="url(#washBlue)"/>
+    <ellipse cx="1310" cy="250" rx="490" ry="330" fill="url(#washLav)"/>
+    <ellipse cx="800" cy="580" rx="720" ry="220" fill="url(#washCyan)"/>
+    <rect x="10" y="10" width="1580" height="480" fill="url(#grid)" mask="url(#gridMask)"/>
+
+    <!-- faint layout wireframe, lower-left of right region -->
+    <g fill="none" stroke="#5F6673" stroke-opacity="0.14" stroke-width="1.5">
+      <rect x="948" y="356" width="120" height="76" rx="8"/>
+      <line x1="948" y1="382" x2="1068" y2="382"/>
+      <line x1="988" y1="356" x2="988" y2="432"/>
+    </g>
+
+    <!-- skeleton text rows -->
+    <g fill="#5F6673">
+      <rect x="976" y="196" width="92" height="8" rx="4" opacity="0.16"/>
+      <rect x="976" y="214" width="64" height="8" rx="4" opacity="0.12"/>
+      <rect x="976" y="232" width="78" height="8" rx="4" opacity="0.16"/>
+    </g>
+
+    <!-- scattered terminal cells -->
+    <g fill="none" stroke="#5F6673" stroke-opacity="0.22" stroke-width="1.5">
+      <rect x="1090" y="150" width="22" height="22" rx="6"/>
+      <rect x="1420" y="330" width="22" height="22" rx="6"/>
+    </g>
+    <rect x="1453" y="151" width="14" height="14" rx="4" fill="#CE422B" opacity="0.7"/>
+
+    <!-- mini bar chart -->
+    <g>
+      <line x1="992" y1="318" x2="1076" y2="318" stroke="#111318" stroke-opacity="0.18" stroke-width="1.5"/>
+      <rect x="996" y="294" width="13" height="24" rx="3" fill="#3776AB" opacity="0.5"/>
+      <rect x="1015" y="278" width="13" height="40" rx="3" fill="#8A8FD0" opacity="0.5"/>
+      <rect x="1034" y="288" width="13" height="30" rx="3" fill="#3FA9A0" opacity="0.5"/>
+      <rect x="1053" y="268" width="13" height="50" rx="3" fill="#5F6673" opacity="0.35"/>
+    </g>
+
+    <!-- glow + logo tile -->
+    <circle cx="1252" cy="248" r="215" fill="url(#glowLav)"/>
+    <rect x="1109" y="113" width="290" height="290" rx="40" fill="#111318" opacity="0.07"/>
+    <rect x="1109" y="109" width="290" height="290" rx="40" fill="#111318" opacity="0.05"/>
+    <rect x="1105" y="105" width="290" height="290" rx="40" fill="#FFFFFF" opacity="0.66"/>
+    <rect x="1105" y="105" width="290" height="290" rx="40" fill="none" stroke="#111318" stroke-opacity="0.1" stroke-width="2"/>
+    <g transform="translate(1167,167) scale(3.3)" fill="#111318">
+      <title>Ratatui</title>
+      <path d="M50 16h-1v4h-1v1h-1v1h-1v1h-2v1h-1v1h-1v1h-1v1h-2v9h5v1h1v9h-1v1h-1v2h-1v1h-1v-1h-1v1h-2v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h-2v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1H9v1H8v1H7v1H6v1H5v1H4v1H3v1H2v2h1v1h1v1h1v1h1v1h1v1H5v-1H4v-1H3v-1H2v-1H1v-1H0v-2h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h2v1h1v-1h-1v-1h-1v-2h1v-1h1v-1h2v-1h7v-1h1v-1h1v-1h1v-1h1v-1h1v-1h4v-1h3v-1h10zM39 49h1v-1h-1zm2-8h-3v1h-1v3h-1v-1h-1v1h1v1h1v1h1v1h1v-1h1v-1h1v-1h1v-5h-1zm-7 3h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-1-1h1v-1h-1zm-5-5h1v1h1v1h1v1h1v1h1v-2h1v-2h1v-1h-2v1h-4v-1h-1zm14-11h-1v2h1v1h2v-1h1v-2h-1v-1h-2zM18 40h1v1h1v2h-1v-1h-1v-1h-1v-2h1zm0-7h1v4h-4v-1h-1v-1h3v-3h1zM29 1h1v9h1v1h1v2h1v2h-1v1h-1v1h-1v1h-1v1h-1v1h-3v-1h-1v-1h-2v-1h-1v-1h-1v-1h-6v-1h-1V9h1V8h1V7h1V6h1V5h1V4h1V3h1V2h1V1h2V0h6z"/>
+    </g>
+    <text x="1256" y="436" text-anchor="middle" font-family="Inter, -apple-system, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="22" font-weight="600" letter-spacing="7" fill="#5F6673">ratatui</text>
+  </g>
+
+  <!-- card hairline -->
+  <rect x="10" y="10" width="1580" height="480" rx="30" fill="none" stroke="#111318" stroke-opacity="0.12" stroke-width="1.5"/>
+
+  <!-- wordmark -->
+  <text x="118" y="282" font-family="Inter, -apple-system, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="130" font-weight="800" letter-spacing="-3" fill="#111318">pyratatui</text>
+  <text x="124" y="342" font-family="Inter, -apple-system, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="34" font-weight="500" letter-spacing="0" fill="#5F6673">Python bindings for Ratatui, powered by Rust.</text>
+
+  <!-- technology accents: Python pair, Rust, Ratatui pixel -->
+  <g>
+    <line x1="124" y1="394" x2="268" y2="394" stroke="#111318" stroke-opacity="0.14" stroke-width="2"/>
+    <circle cx="124" cy="394" r="8" fill="#3776AB"/>
+    <circle cx="150" cy="394" r="8" fill="#FFD43B"/>
+    <circle cx="196" cy="394" r="8" fill="#CE422B"/>
+    <rect x="228" y="386" width="16" height="16" rx="4" fill="#111318"/>
+  </g>
+</svg>
