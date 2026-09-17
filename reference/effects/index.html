@@ -1,0 +1,3476 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python bindings for ratatui 0.30 — Chart, PieChart, Menu, Throbber, Checkbox, BarGraph, Tree, Markdown, Logger, Image widgets, tachyonfx effects, typed API">
+      
+      
+      
+        <link rel="canonical" href="https://pyratatui.github.io/pyratatui/reference/effects/">
+      
+      
+        <link rel="prev" href="../style/">
+      
+      
+        <link rel="next" href="../prompts/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Effects (TachyonFX) - pyratatui</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#effects-tachyonfx-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="pyratatui" class="md-header__button md-logo" aria-label="pyratatui" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pyratatui
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Effects (TachyonFX)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pyratatui/pyratatui" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    pyratatui/pyratatui
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../installation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Installation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorial/quickstart/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../terminal/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/minimal_examples/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../build/build_scripts/" class="md-tabs__link">
+          
+  
+  
+  Build & Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="pyratatui" class="md-nav__button md-logo" aria-label="pyratatui" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    pyratatui
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pyratatui/pyratatui" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    pyratatui/pyratatui
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/async_updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Async Updates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/progress_bar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progress Bar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/table_updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tables & Lists
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/tachyonfx_effects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TachyonFX Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terminal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminal & Frame
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../widgets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Widgets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mascot_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mascot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style & Text
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Effects (TachyonFX)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Effects (TachyonFX)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rendering-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rendering Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Effect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#color-fade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color Fade
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Color Fade">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_fromfrom_bg-from_fg-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_from(from_bg, from_fg, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_from_fgfrom_color-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_from_fg(from_color, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_toto_bg-to_fg-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_to(to_bg, to_fg, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_to_fgto_color-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_to_fg(to_color, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-materialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Materialization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Materialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectcoalesceduration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.coalesce(duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectdissolveduration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.dissolve(duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sliding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sliding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sliding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectslide_indirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.slide_in(direction, begin_sweep=0, end_sweep=0, color=None, duration_ms=500, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectslide_outdirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.slide_out(direction, begin_sweep=0, end_sweep=0, color=None, duration_ms=500, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweeping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sweeping
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sweeping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectsweep_indirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sweep_in(direction, sweep_span=15, gradient_len=0, color=None, duration_ms=600, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectsweep_outdirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sweep_out(direction, sweep_span=15, gradient_len=0, color=None, duration_ms=600, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectsleepduration_ms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sleep(duration_ms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Composition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectsequenceeffects-listeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sequence(effects: list[Effect])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectparalleleffects-listeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.parallel(effects: list[Effect])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectrepeateffect-times-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.repeat(effect, times=-1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectping_pongeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.ping_pong(effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectnever_completeeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.never_complete(effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instance-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instance Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instance Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with_filterfilter-cellfilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .with_filter(filter: CellFilter)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processelapsed_ms-buffer-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .process(elapsed_ms, buffer, area)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#done-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .done() → bool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .reset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effectmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EffectManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="EffectManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addeffect-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .add(effect: Effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add_uniquekey-str-effect-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .add_unique(key: str, effect: Effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processelapsed_ms-buffer-area_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .process(elapsed_ms, buffer, area)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active_count-int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .active_count() → int
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#has_active-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .has_active() → bool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .clear()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cellfilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CellFilter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CellFilter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#factory-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factory Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpolation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effecttimer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EffectTimer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dsl-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DSL Compiler
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../popups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Popups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../textarea/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TextArea
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scrollview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ScrollView
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qrcode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QrCodeWidget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calendar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calendar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bar_graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BarGraph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tree_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TreeWidget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../markdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ImageWidget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../throbber_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Throbber
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../menu_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Menu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../piechart_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PieChart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../checkbox_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checkbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chart_widget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../buffer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buffer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/minimal_examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Minimal Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/advanced_examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build & Package
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build & Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/build_scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/packaging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Packaging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rendering-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rendering Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Effect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#color-fade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color Fade
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Color Fade">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_fromfrom_bg-from_fg-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_from(from_bg, from_fg, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_from_fgfrom_color-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_from_fg(from_color, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_toto_bg-to_fg-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_to(to_bg, to_fg, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectfade_to_fgto_color-duration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.fade_to_fg(to_color, duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-materialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Materialization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Materialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectcoalesceduration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.coalesce(duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectdissolveduration_ms-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.dissolve(duration_ms, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sliding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sliding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sliding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectslide_indirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.slide_in(direction, begin_sweep=0, end_sweep=0, color=None, duration_ms=500, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectslide_outdirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.slide_out(direction, begin_sweep=0, end_sweep=0, color=None, duration_ms=500, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweeping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sweeping
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sweeping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectsweep_indirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sweep_in(direction, sweep_span=15, gradient_len=0, color=None, duration_ms=600, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectsweep_outdirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sweep_out(direction, sweep_span=15, gradient_len=0, color=None, duration_ms=600, interpolation=None)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectsleepduration_ms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sleep(duration_ms)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composition
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Composition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effectsequenceeffects-listeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.sequence(effects: list[Effect])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectparalleleffects-listeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.parallel(effects: list[Effect])
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectrepeateffect-times-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.repeat(effect, times=-1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectping_pongeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.ping_pong(effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effectnever_completeeffect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect.never_complete(effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instance-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instance Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instance Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with_filterfilter-cellfilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .with_filter(filter: CellFilter)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processelapsed_ms-buffer-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .process(elapsed_ms, buffer, area)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#done-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .done() → bool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .reset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effectmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EffectManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="EffectManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addeffect-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .add(effect: Effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add_uniquekey-str-effect-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .add_unique(key: str, effect: Effect)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processelapsed_ms-buffer-area_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .process(elapsed_ms, buffer, area)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active_count-int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .active_count() → int
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#has_active-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .has_active() → bool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .clear()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cellfilter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CellFilter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CellFilter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#factory-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factory Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpolation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#effecttimer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EffectTimer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dsl-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DSL Compiler
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="effects-tachyonfx-reference">Effects (TachyonFX) Reference<a class="headerlink" href="#effects-tachyonfx-reference" title="Permanent link">&para;</a></h1>
+<p>TachyonFX is a post-render animation engine integrated into pyratatui. Effects are applied to the frame buffer <em>after</em> widgets are rendered, transforming the already-drawn cells.</p>
+<hr />
+<h2 id="rendering-order">Rendering Order<a class="headerlink" href="#rendering-order" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>frame.render_widget(...)         ← 1. Draw widgets into buffer
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>frame.apply_effect_manager(...)  ← 2. Apply effects to buffer cells
+</span></code></pre></div>
+<p>Effects applied before widget rendering operate on blank or stale cells and will not produce meaningful results.</p>
+<hr />
+<h2 id="effect">Effect<a class="headerlink" href="#effect" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">Effect</span>
+</span></code></pre></div>
+<p>A stateful animation shader. All factory methods are static — <code>Effect</code> is never instantiated directly.</p>
+<h3 id="color-fade">Color Fade<a class="headerlink" href="#color-fade" title="Permanent link">&para;</a></h3>
+<h4 id="effectfade_fromfrom_bg-from_fg-duration_ms-interpolationnone"><code>Effect.fade_from(from_bg, from_fg, duration_ms, interpolation=None)</code><a class="headerlink" href="#effectfade_fromfrom_bg-from_fg-duration_ms-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Transitions both background and foreground colors from the given colors to the widget's actual rendered colors.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>from_bg</code></td>
+<td><code>Color</code></td>
+<td>required</td>
+<td>Starting background color</td>
+</tr>
+<tr>
+<td><code>from_fg</code></td>
+<td><code>Color</code></td>
+<td>required</td>
+<td>Starting foreground color</td>
+</tr>
+<tr>
+<td><code>duration_ms</code></td>
+<td><code>int</code></td>
+<td>required</td>
+<td>Duration in milliseconds</td>
+</tr>
+<tr>
+<td><code>interpolation</code></td>
+<td><code>Interpolation \| None</code></td>
+<td><code>Linear</code></td>
+<td>Easing curve</td>
+</tr>
+</tbody>
+</table>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Fade in from black</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">fade_from</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">SineOut</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectfade_from_fgfrom_color-duration_ms-interpolationnone"><code>Effect.fade_from_fg(from_color, duration_ms, interpolation=None)</code><a class="headerlink" href="#effectfade_from_fgfrom_color-duration_ms-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Transitions only the foreground color. Background is unaffected.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">fade_from_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">800</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadOut</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectfade_toto_bg-to_fg-duration_ms-interpolationnone"><code>Effect.fade_to(to_bg, to_fg, duration_ms, interpolation=None)</code><a class="headerlink" href="#effectfade_toto_bg-to_fg-duration_ms-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Transitions both colors toward the given target colors.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Fade out to black</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">fade_to</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">SineIn</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectfade_to_fgto_color-duration_ms-interpolationnone"><code>Effect.fade_to_fg(to_color, duration_ms, interpolation=None)</code><a class="headerlink" href="#effectfade_to_fgto_color-duration_ms-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Transitions only the foreground toward <code>to_color</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">fade_to_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">800</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadIn</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="text-materialization">Text Materialization<a class="headerlink" href="#text-materialization" title="Permanent link">&para;</a></h3>
+<h4 id="effectcoalesceduration_ms-interpolationnone"><code>Effect.coalesce(duration_ms, interpolation=None)</code><a class="headerlink" href="#effectcoalesceduration_ms-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Text characters appear to coalesce (assemble from random positions).</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">1200</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadOut</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectdissolveduration_ms-interpolationnone"><code>Effect.dissolve(duration_ms, interpolation=None)</code><a class="headerlink" href="#effectdissolveduration_ms-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Text characters dissolve into random positions.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">dissolve</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadIn</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="sliding">Sliding<a class="headerlink" href="#sliding" title="Permanent link">&para;</a></h3>
+<h4 id="effectslide_indirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone"><code>Effect.slide_in(direction, begin_sweep=0, end_sweep=0, color=None, duration_ms=500, interpolation=None)</code><a class="headerlink" href="#effectslide_indirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Content slides in from the specified direction.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direction</code></td>
+<td><code>Motion</code></td>
+<td>required</td>
+<td>Direction to slide from</td>
+</tr>
+<tr>
+<td><code>begin_sweep</code></td>
+<td><code>int</code></td>
+<td><code>0</code></td>
+<td>Leading edge width</td>
+</tr>
+<tr>
+<td><code>end_sweep</code></td>
+<td><code>int</code></td>
+<td><code>0</code></td>
+<td>Trailing edge width</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td><code>Color \| None</code></td>
+<td><code>Color.black()</code></td>
+<td>Color of the sweep edge</td>
+</tr>
+<tr>
+<td><code>duration_ms</code></td>
+<td><code>int</code></td>
+<td><code>500</code></td>
+<td>Duration</td>
+</tr>
+<tr>
+<td><code>interpolation</code></td>
+<td><code>Interpolation \| None</code></td>
+<td><code>Linear</code></td>
+<td>Easing</td>
+</tr>
+</tbody>
+</table>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">slide_in</span><span class="p">(</span><span class="n">Motion</span><span class="o">.</span><span class="n">LeftToRight</span><span class="p">,</span> <span class="n">duration_ms</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadOut</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectslide_outdirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone"><code>Effect.slide_out(direction, begin_sweep=0, end_sweep=0, color=None, duration_ms=500, interpolation=None)</code><a class="headerlink" href="#effectslide_outdirection-begin_sweep0-end_sweep0-colornone-duration_ms500-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>Content slides out in the specified direction.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">slide_out</span><span class="p">(</span><span class="n">Motion</span><span class="o">.</span><span class="n">RightToLeft</span><span class="p">,</span> <span class="n">duration_ms</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h3 id="sweeping">Sweeping<a class="headerlink" href="#sweeping" title="Permanent link">&para;</a></h3>
+<h4 id="effectsweep_indirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone"><code>Effect.sweep_in(direction, sweep_span=15, gradient_len=0, color=None, duration_ms=600, interpolation=None)</code><a class="headerlink" href="#effectsweep_indirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>A reveal sweep from the given direction.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direction</code></td>
+<td><code>Motion</code></td>
+<td>required</td>
+<td>Sweep direction</td>
+</tr>
+<tr>
+<td><code>sweep_span</code></td>
+<td><code>int</code></td>
+<td><code>15</code></td>
+<td>Width of the sweep front</td>
+</tr>
+<tr>
+<td><code>gradient_len</code></td>
+<td><code>int</code></td>
+<td><code>0</code></td>
+<td>Gradient fade length</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td><code>Color \| None</code></td>
+<td><code>Color.black()</code></td>
+<td>Sweep color</td>
+</tr>
+<tr>
+<td><code>duration_ms</code></td>
+<td><code>int</code></td>
+<td><code>600</code></td>
+<td>Duration</td>
+</tr>
+<tr>
+<td><code>interpolation</code></td>
+<td><code>Interpolation \| None</code></td>
+<td><code>Linear</code></td>
+<td>Easing</td>
+</tr>
+</tbody>
+</table>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">sweep_in</span><span class="p">(</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="n">Motion</span><span class="o">.</span><span class="n">LeftToRight</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="n">sweep_span</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">gradient_len</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="n">color</span><span class="o">=</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="n">duration_ms</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="n">interpolation</span><span class="o">=</span><span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadOut</span><span class="p">,</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectsweep_outdirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone"><code>Effect.sweep_out(direction, sweep_span=15, gradient_len=0, color=None, duration_ms=600, interpolation=None)</code><a class="headerlink" href="#effectsweep_outdirection-sweep_span15-gradient_len0-colornone-duration_ms600-interpolationnone" title="Permanent link">&para;</a></h4>
+<p>A conceal sweep.</p>
+<hr />
+<h3 id="timing">Timing<a class="headerlink" href="#timing" title="Permanent link">&para;</a></h3>
+<h4 id="effectsleepduration_ms"><code>Effect.sleep(duration_ms)</code><a class="headerlink" href="#effectsleepduration_ms" title="Permanent link">&para;</a></h4>
+<p>A no-op delay. Useful as a pause inside sequences.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Effect</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>  <span class="c1"># hold for 500ms</span>
+</span></code></pre></div>
+<hr />
+<h3 id="composition">Composition<a class="headerlink" href="#composition" title="Permanent link">&para;</a></h3>
+<h4 id="effectsequenceeffects-listeffect"><code>Effect.sequence(effects: list[Effect])</code><a class="headerlink" href="#effectsequenceeffects-listeffect" title="Permanent link">&para;</a></h4>
+<p>Play effects one after another. Each starts when the previous completes.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">intro</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">sequence</span><span class="p">([</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">fade_from_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">800</span><span class="p">),</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">300</span><span class="p">),</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">fade_to_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">600</span><span class="p">),</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">])</span>
+</span></code></pre></div>
+<h4 id="effectparalleleffects-listeffect"><code>Effect.parallel(effects: list[Effect])</code><a class="headerlink" href="#effectparalleleffects-listeffect" title="Permanent link">&para;</a></h4>
+<p>Play all effects simultaneously. Completes when all effects are done.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">combo</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">parallel</span><span class="p">([</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">fade_from</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">500</span><span class="p">),</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">])</span>
+</span></code></pre></div>
+<h4 id="effectrepeateffect-times-1"><code>Effect.repeat(effect, times=-1)</code><a class="headerlink" href="#effectrepeateffect-times-1" title="Permanent link">&para;</a></h4>
+<p>Repeat an effect <code>times</code> times. Pass <code>-1</code> (default) for infinite looping.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">blink</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">fade_to_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">400</span><span class="p">),</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="n">times</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">)</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="n">forever</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">Effect</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">800</span><span class="p">),</span> <span class="n">times</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectping_pongeffect"><code>Effect.ping_pong(effect)</code><a class="headerlink" href="#effectping_pongeffect" title="Permanent link">&para;</a></h4>
+<p>Play the effect forward, then backward, forever.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">pulse</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">ping_pong</span><span class="p">(</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    <span class="n">Effect</span><span class="o">.</span><span class="n">fade_from_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">SineInOut</span><span class="p">)</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="effectnever_completeeffect"><code>Effect.never_complete(effect)</code><a class="headerlink" href="#effectnever_completeeffect" title="Permanent link">&para;</a></h4>
+<p>Wraps an effect so it never reports <code>done()=True</code>. Useful for looping effects that you want to manage manually.</p>
+<hr />
+<h3 id="instance-methods">Instance Methods<a class="headerlink" href="#instance-methods" title="Permanent link">&para;</a></h3>
+<h4 id="with_filterfilter-cellfilter"><code>.with_filter(filter: CellFilter)</code><a class="headerlink" href="#with_filterfilter-cellfilter" title="Permanent link">&para;</a></h4>
+<p>Restrict the effect to a subset of cells. Mutates the effect in-place.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">effect</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span><span class="n">CellFilter</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>  <span class="c1"># only affect text cells</span>
+</span></code></pre></div>
+<h4 id="processelapsed_ms-buffer-area"><code>.process(elapsed_ms, buffer, area)</code><a class="headerlink" href="#processelapsed_ms-buffer-area" title="Permanent link">&para;</a></h4>
+<p>Manually advance the effect. Normally called via <code>frame.apply_effect_manager()</code>.</p>
+<h4 id="done-bool"><code>.done() → bool</code><a class="headerlink" href="#done-bool" title="Permanent link">&para;</a></h4>
+<p>Returns <code>True</code> if the effect has completed.</p>
+<h4 id="reset"><code>.reset()</code><a class="headerlink" href="#reset" title="Permanent link">&para;</a></h4>
+<p>Restart the effect from the beginning.</p>
+<hr />
+<h2 id="effectmanager">EffectManager<a class="headerlink" href="#effectmanager" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">EffectManager</span>
+</span></code></pre></div>
+<p>Manages a list of active effects, auto-removing completed ones each frame.</p>
+<h3 id="constructor">Constructor<a class="headerlink" href="#constructor" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">mgr</span> <span class="o">=</span> <span class="n">EffectManager</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h3>
+<h4 id="addeffect-effect"><code>.add(effect: Effect)</code><a class="headerlink" href="#addeffect-effect" title="Permanent link">&para;</a></h4>
+<p>Add an effect to the manager. The effect runs until <code>done()</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">mgr</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Effect</span><span class="o">.</span><span class="n">fade_from_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">))</span>
+</span></code></pre></div>
+<h4 id="add_uniquekey-str-effect-effect"><code>.add_unique(key: str, effect: Effect)</code><a class="headerlink" href="#add_uniquekey-str-effect-effect" title="Permanent link">&para;</a></h4>
+<p>Add a named effect, replacing any existing effect registered under the same key.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">mgr</span><span class="o">.</span><span class="n">add_unique</span><span class="p">(</span><span class="s2">"startup"</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">sweep_in</span><span class="p">(</span><span class="n">Motion</span><span class="o">.</span><span class="n">LeftToRight</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">800</span><span class="p">))</span>
+</span></code></pre></div>
+<h4 id="processelapsed_ms-buffer-area_1"><code>.process(elapsed_ms, buffer, area)</code><a class="headerlink" href="#processelapsed_ms-buffer-area_1" title="Permanent link">&para;</a></h4>
+<p>Advance all effects and remove completed ones. Called automatically via <code>frame.apply_effect_manager()</code>.</p>
+<h4 id="active_count-int"><code>.active_count() → int</code><a class="headerlink" href="#active_count-int" title="Permanent link">&para;</a></h4>
+<p>Number of currently running effects.</p>
+<h4 id="has_active-bool"><code>.has_active() → bool</code><a class="headerlink" href="#has_active-bool" title="Permanent link">&para;</a></h4>
+<p><code>True</code> if any effect is still running.</p>
+<h4 id="clear"><code>.clear()</code><a class="headerlink" href="#clear" title="Permanent link">&para;</a></h4>
+<p>Remove all effects immediately.</p>
+<h3 id="usage-pattern">Usage Pattern<a class="headerlink" href="#usage-pattern" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">mgr</span>   <span class="o">=</span> <span class="n">EffectManager</span><span class="p">()</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">last</span>  <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="c1"># Add startup animation</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="n">mgr</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Effect</span><span class="o">.</span><span class="n">sweep_in</span><span class="p">(</span><span class="n">Motion</span><span class="o">.</span><span class="n">LeftToRight</span><span class="p">,</span> <span class="n">sweep_span</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">duration_ms</span><span class="o">=</span><span class="mi">800</span><span class="p">))</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="k">with</span> <span class="n">Terminal</span><span class="p">()</span> <span class="k">as</span> <span class="n">term</span><span class="p">:</span>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>        <span class="n">ms</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">now</span> <span class="o">-</span> <span class="n">last</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>        <span class="n">last</span> <span class="o">=</span> <span class="n">now</span>
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">ui</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">_mgr</span><span class="o">=</span><span class="n">mgr</span><span class="p">,</span> <span class="n">_ms</span><span class="o">=</span><span class="n">ms</span><span class="p">):</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>            <span class="n">area</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">area</span>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>            <span class="n">frame</span><span class="o">.</span><span class="n">render_widget</span><span class="p">(</span><span class="n">my_widget</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>          <span class="c1"># 1. render</span>
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>            <span class="n">frame</span><span class="o">.</span><span class="n">apply_effect_manager</span><span class="p">(</span><span class="n">_mgr</span><span class="p">,</span> <span class="n">_ms</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>  <span class="c1"># 2. animate</span>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>        <span class="n">term</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">ui</span><span class="p">)</span>
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>        <span class="n">ev</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">poll_event</span><span class="p">(</span><span class="n">timeout_ms</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>        <span class="k">if</span> <span class="n">ev</span> <span class="ow">and</span> <span class="n">ev</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="s2">"q"</span><span class="p">:</span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>            <span class="k">break</span>
+</span></code></pre></div>
+<hr />
+<h2 id="cellfilter">CellFilter<a class="headerlink" href="#cellfilter" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">CellFilter</span>
+</span></code></pre></div>
+<p>Restricts which buffer cells an effect transforms.</p>
+<h3 id="factory-methods">Factory Methods<a class="headerlink" href="#factory-methods" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CellFilter.all()</code></td>
+<td>All cells in the area</td>
+</tr>
+<tr>
+<td><code>CellFilter.text()</code></td>
+<td>Only cells with non-space foreground (text cells)</td>
+</tr>
+<tr>
+<td><code>CellFilter.fg_color(color)</code></td>
+<td>Only cells with matching foreground color</td>
+</tr>
+<tr>
+<td><code>CellFilter.bg_color(color)</code></td>
+<td>Only cells with matching background color</td>
+</tr>
+<tr>
+<td><code>CellFilter.inner(horizontal=1, vertical=1)</code></td>
+<td>Only cells inside the margin</td>
+</tr>
+<tr>
+<td><code>CellFilter.outer(horizontal=1, vertical=1)</code></td>
+<td>Only cells in the margin (borders)</td>
+</tr>
+<tr>
+<td><code>CellFilter.all_of(filters)</code></td>
+<td>Intersection of multiple filters</td>
+</tr>
+<tr>
+<td><code>CellFilter.any_of(filters)</code></td>
+<td>Union of multiple filters</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Fade only text, not border cells</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">fade_from_fg</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">black</span><span class="p">(),</span> <span class="mi">800</span><span class="p">)</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">effect</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span><span class="n">CellFilter</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># Fade only cyan cells (e.g. highlights)</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="n">effect2</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">dissolve</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="n">effect2</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span><span class="n">CellFilter</span><span class="o">.</span><span class="n">fg_color</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">cyan</span><span class="p">()))</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="c1"># Affect only the interior (skip borders)</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="n">effect3</span> <span class="o">=</span> <span class="n">Effect</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="n">effect3</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span><span class="n">CellFilter</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">horizontal</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span></code></pre></div>
+<hr />
+<h2 id="interpolation">Interpolation<a class="headerlink" href="#interpolation" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpolation</span>
+</span></code></pre></div>
+<p>Easing curves that control the acceleration profile of an effect.</p>
+<table>
+<thead>
+<tr>
+<th>Enum value</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Linear</code></td>
+<td>Constant speed</td>
+</tr>
+<tr>
+<td><code>QuadIn</code> / <code>QuadOut</code> / <code>QuadInOut</code></td>
+<td>Quadratic (gentle)</td>
+</tr>
+<tr>
+<td><code>CubicIn</code> / <code>CubicOut</code> / <code>CubicInOut</code></td>
+<td>Cubic (moderate)</td>
+</tr>
+<tr>
+<td><code>QuartIn</code> / <code>QuartOut</code> / <code>QuartInOut</code></td>
+<td>Quartic (strong)</td>
+</tr>
+<tr>
+<td><code>QuintIn</code> / <code>QuintOut</code> / <code>QuintInOut</code></td>
+<td>Quintic (very strong)</td>
+</tr>
+<tr>
+<td><code>SineIn</code> / <code>SineOut</code> / <code>SineInOut</code></td>
+<td>Sinusoidal (natural)</td>
+</tr>
+<tr>
+<td><code>ExpoIn</code> / <code>ExpoOut</code> / <code>ExpoInOut</code></td>
+<td>Exponential (dramatic)</td>
+</tr>
+<tr>
+<td><code>CircIn</code> / <code>CircOut</code> / <code>CircInOut</code></td>
+<td>Circular</td>
+</tr>
+<tr>
+<td><code>ElasticIn</code> / <code>ElasticOut</code></td>
+<td>Elastic/spring overshoot</td>
+</tr>
+<tr>
+<td><code>BounceIn</code> / <code>BounceOut</code> / <code>BounceInOut</code></td>
+<td>Bouncing</td>
+</tr>
+<tr>
+<td><code>BackIn</code> / <code>BackOut</code> / <code>BackInOut</code></td>
+<td>Slight overshoot</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>In</code> suffix = starts slow (accelerates). <code>Out</code> = starts fast (decelerates). <code>InOut</code> = slow-fast-slow.</p>
+<p><strong>Recommended combinations:</strong>
+- Fade-in: <code>SineOut</code> or <code>QuadOut</code> (fast start, gentle finish)
+- Fade-out: <code>SineIn</code> or <code>QuadIn</code> (gentle start, fast end)
+- Sweep/slide: <code>QuadOut</code> or <code>CubicOut</code> (punchy reveal)
+- Ping-pong: <code>SineInOut</code> (smooth oscillation)</p>
+<hr />
+<h2 id="motion">Motion<a class="headerlink" href="#motion" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">Motion</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">Motion</span><span class="o">.</span><span class="n">LeftToRight</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">Motion</span><span class="o">.</span><span class="n">RightToLeft</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="n">Motion</span><span class="o">.</span><span class="n">UpToDown</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="n">Motion</span><span class="o">.</span><span class="n">DownToUp</span>
+</span></code></pre></div>
+<p>Direction used by slide and sweep effects.</p>
+<hr />
+<h2 id="effecttimer">EffectTimer<a class="headerlink" href="#effecttimer" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">EffectTimer</span>
+</span></code></pre></div>
+<p>A duration + interpolation pair. Used internally by effects but also constructable directly:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">timer</span> <span class="o">=</span> <span class="n">EffectTimer</span><span class="p">(</span><span class="n">duration_ms</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">Interpolation</span><span class="o">.</span><span class="n">SineOut</span><span class="p">)</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>duration_ms</code></td>
+<td><code>int</code></td>
+<td>Duration in milliseconds</td>
+</tr>
+<tr>
+<td><code>interpolation</code></td>
+<td><code>Interpolation</code></td>
+<td>Easing curve</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="dsl-compiler">DSL Compiler<a class="headerlink" href="#dsl-compiler" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyratatui</span><span class="w"> </span><span class="kn">import</span> <span class="n">compile_effect</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">compile_effect</span><span class="p">(</span><span class="s2">"expression"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Compile a tachyonfx DSL expression string into an <code>Effect</code>. Raises <code>ValueError</code> on parse or compile errors.</p>
+<p>The DSL supports all built-in effects with duration in milliseconds and optional interpolation:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">effect</span> <span class="o">=</span> <span class="n">compile_effect</span><span class="p">(</span><span class="s2">"fade_from_fg(black, 800ms, sine_out)"</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<p><strong>Track elapsed time accurately.</strong> Pass the actual wall-clock time since the last frame (not a fixed value):</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">last</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>    <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>    <span class="n">elapsed_ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">now</span> <span class="o">-</span> <span class="n">last</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>    <span class="n">last</span> <span class="o">=</span> <span class="n">now</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>    <span class="c1"># ... render and apply effects with elapsed_ms</span>
+</span></code></pre></div>
+<p><strong>Apply effects after all widget renders.</strong> Effects transform cells in the buffer; if you render widgets after applying effects, the widget will overwrite the animated cells.</p>
+<p><strong>Use <code>EffectManager</code> for multiple effects.</strong> It auto-cleans completed effects so you don't need to manually track <code>effect.done()</code>.</p>
+<p><strong>Use <code>add_unique</code> for retriggerable effects.</strong> If a user action triggers an animation (e.g. row selection change), <code>add_unique</code> prevents the same effect from stacking:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">mgr</span><span class="o">.</span><span class="n">add_unique</span><span class="p">(</span><span class="s2">"selection"</span><span class="p">,</span> <span class="n">Effect</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="n">Interpolation</span><span class="o">.</span><span class="n">QuadOut</span><span class="p">))</span>
+</span></code></pre></div>
+<p><strong>Limit effect area.</strong> Smaller areas process faster. For widget-specific effects, pass the widget's <code>Rect</code> rather than <code>frame.area</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      pyratatui contributors — MIT License
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/pyratatui/pyratatui" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/pyratatui" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.instant", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
