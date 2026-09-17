@@ -4,18 +4,13 @@ build-backend = "maturin"
 
 [project]
 name = "pyratatui"
-version = "0.2.9"
-description = "🚀🍀 PyRatatui — Professional Python bindings for ratatui 0.30 🦀🤩 | 💥🔥 High-performance Rust TUI engine for building rich terminal applications, interactive CLIs, dashboards, and text-based UIs 💯✨"
-authors = [{ name = "PyRatatui contributors" }]
+version = "0.3.0"
+description = "Python bindings for Ratatui"
+authors = [{ name = "pyratatui contributors" }]
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.10"
-keywords = [
-    "ratatui", "tui", "terminal", "cli", "dashboard", "interactive", "text-ui",
-    "python-rust", "python-bindings", "rich-ui", "ascii-ui", "curses-alternative",
-    "cross-platform", "high-performance", "async", "widgets", "layout", "panels",
-    "colors", "themes", "modern-terminal", "terminal-apps", "console", "python-tui"
-]
+keywords = ["ratatui", "tui", "terminal", "bindings"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -26,63 +21,41 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Rust",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Software Development :: User Interfaces",
     "Topic :: Terminals",
-    "Topic :: Utilities",
-    "Framework :: AsyncIO",
-    "Operating System :: OS Independent"
 ]
-dependencies = ["typer>=0.9"]
+dependencies = []
 
 [project.optional-dependencies]
-async = []
 dev = [
     "pytest>=8.0",
-    "pytest-asyncio>=0.23",
     "ruff>=0.6",
     "mypy>=1.11",
 ]
-docs = [
-    "mkdocs>=1.6",
-    "mkdocs-material>=9.5",
-    "mkdocstrings[python]>=0.25",
-    "mkdocs-gen-files>=0.5",
-]
 
 [project.urls]
-Homepage      = "https://github.com/pyratatui/pyratatui"
-Documentation = "https://pyratatui.github.io/pyratatui"
-Repository    = "https://github.com/pyratatui/pyratatui"
-Issues        = "https://github.com/pyratatui/pyratatui/issues"
+Homepage = "https://github.com/pyratatui/pyratatui"
+Repository = "https://github.com/pyratatui/pyratatui"
+Issues = "https://github.com/pyratatui/pyratatui/issues"
 
-# ── Single entry point — the unified CLI ─────────────────────────────────────
-[project.scripts]
-pyratatui = "pyratatui.cli:main"
-
-# ── Maturin / PyO3 build config ───────────────────────────────────────────────
 [tool.maturin]
-bindings      = "pyo3"
-strip         = true
+bindings = "pyo3"
+strip = true
 python-source = "python"
-module-name   = "pyratatui._pyratatui"
-features      = ["pyo3/extension-module"]
+module-name = "pyratatui._pyratatui"
+features = ["pyo3/extension-module"]
 
-# ── Ruff ──────────────────────────────────────────────────────────────────────
 [tool.ruff]
-line-length    = 100
+line-length = 100
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM", "N"]
+select = ["E", "F", "I", "UP", "B"]
 ignore = ["E501"]
 
-# ── Mypy ─────────────────────────────────────────────────────────────────────
 [tool.mypy]
-python_version      = "3.10"
-strict              = true
+python_version = "3.10"
+strict = true
 ignore_missing_imports = true
 
-# ── Pytest ────────────────────────────────────────────────────────────────────
 [tool.pytest.ini_options]
-testpaths = ["tests/python"]
+testpaths = ["tests"]

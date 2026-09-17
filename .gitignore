@@ -1,61 +1,16 @@
-# Compiled files
 /target/
-
-# Rust/Cargo
-**/*.rs.bk
-Cargo.lock
-
-# Uncomment the next line if this is a binary/application project.
-#! Cargo.lock
-
-# IDEs
-.idea/
-.vscode/
-*.code-workspace
-
-# OS junk
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Logs
-*.log
-
-# Environment files
-.env
-.env.*
-
-# Coverage
-coverage/
-*.profraw
-*.profdata
-
-# Test artifacts
-**/*.snap.new
-
-# Temporary files
-*.tmp
-*.swp
-*.swo
-*~
-
-# Generated documentation
-/doc/
-site/
-
-# Local builds
-dist/
-
-# Rustfmt backup files
-*.rs.bk
-
-# Python
+/dist/
 __pycache__/
 *.py[cod]
-*$py.class
-*.pyo
-*.pyd
-*.pyc
-
-# Archives
-*.zip
+*.so
+*.rs.bk
+.idea/
+.vscode/
+.DS_Store
+*.log
+.env
+.env.*
+.venv/
+venv/
+*~
+*.swp
