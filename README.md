@@ -125,6 +125,10 @@ ruff check . && ruff format --check .
 
 See [CONTRIBUTING.md](https://github.com/pyratatui/pyratatui/blob/main/CONTRIBUTING.md) for details.
 
+## Acknowledgements
+* Special thanks to the [Ratatui](https://github.com/ratatui/ratatui) project and designer Pavel Fomchenkov for the Ratatui logo.
+* Also, thanks to everyone who has contributed to `pyratatui`!
+
 ## License
 
 MIT — see [LICENSE](https://github.com/pyratatui/pyratatui/blob/main/LICENSE).
